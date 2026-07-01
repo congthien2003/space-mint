@@ -1,6 +1,10 @@
-import { app, BrowserWindow, ipcMain, dialog } from "electron";
+import { app, BrowserWindow } from "electron";
 import { join } from "node:path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
+import { AppStore } from "./store/AppStore";
+import { ProjectService } from "./services/ProjectService";
+import { SettingsService } from "./services/SettingsService";
+import { registerAllIpc } from "./ipc";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -13,6 +17,7 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     title: "Agent Workspace",
+    backgroundColor: "#1b1b1f",
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
@@ -39,22 +44,11 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  ipcMain.handle("app:ping", () => {
-    console.log("ping...");
-    return "pong";
-  });
+  const appStore = new AppStore();
+  const projectService = new ProjectService(appStore);
+  const settingsService = new SettingsService(appStore);
 
-  ipcMain.handle("project:select-folder", async () => {
-    const result = await dialog.showOpenDialog({
-      properties: ["openDirectory"]
-    });
-
-    if (result.canceled || result.filePaths.length === 0) {
-      return null;
-    }
-
-    return result.filePaths[0];
-  });
+  registerAllIpc(projectService, settingsService);
 
   createWindow();
 
