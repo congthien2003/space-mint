@@ -4,11 +4,10 @@ import type { Project, TerminalPane, WorkspaceLayout } from "@shared/types";
 import { useSettingsStore } from "./settings.store";
 import {
   computeSplit,
-  computeNewPanePosition
+  computeNewPanePosition,
+  GRID_COLS,
+  DEFAULT_PANE_H
 } from "@renderer/features/workspace/layout-utils";
-
-const GRID_COLS = 12;
-const DEFAULT_PANE_H = 8;
 
 interface AddPaneOptions {
   cwd: string;
@@ -48,6 +47,35 @@ async function killAllPanes(panes: TerminalPane[]): Promise<void> {
   for (const p of panes) {
     await window.app.terminals.kill(p.id);
   }
+}
+
+/**
+ * Proportionally shrink all panes so their total height fits within DEFAULT_PANE_H.
+ * Panes are compacted vertically (y re-ordered). Returns a freshly mapped array.
+ */
+function compactPanes(panes: TerminalPane[], newPaneGrid: TerminalPane["grid"]): {
+  resized: TerminalPane[];
+  nextGrid: TerminalPane["grid"];
+} {
+  const allH = panes.reduce((sum, p) => sum + p.grid.h, 0) + newPaneGrid.h;
+  if (allH <= DEFAULT_PANE_H) {
+    // No compaction needed — new pane was already appended in caller.
+    return { resized: panes, nextGrid: newPaneGrid };
+  }
+  const scale = DEFAULT_PANE_H / allH;
+  let yOff = 0;
+  const resized = panes.map((p) => {
+    const h = Math.max(1, Math.round(p.grid.h * scale));
+    const item = { ...p, grid: { ...p.grid, y: yOff, h } };
+    yOff += h;
+    return item;
+  });
+  const nextGrid: TerminalPane["grid"] = {
+    ...newPaneGrid,
+    y: yOff,
+    h: Math.max(1, Math.round(newPaneGrid.h * scale))
+  };
+  return { resized, nextGrid };
 }
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
@@ -90,6 +118,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     const shell = opts.shell || resolveShell();
     const panes = get().panes;
     let newPane: TerminalPane;
+    let doneSet = false;
+
     if (opts.fromPaneId && opts.direction) {
       const from = panes.find((p) => p.id === opts.fromPaneId);
       if (!from) return;
@@ -117,14 +147,28 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
         shell,
         grid: pos
       };
+
+      // Proportional resize: if adding this pane would overflow the fixed
+      // viewport, scale all panes down so everything fits on one screen.
+      const allH = panes.reduce((sum, p) => sum + p.grid.h, 0) + pos.h;
+      if (allH > DEFAULT_PANE_H) {
+        const { resized, nextGrid } = compactPanes(panes, pos);
+        newPane.grid = nextGrid;
+        set({ panes: [...resized, newPane] });
+        doneSet = true;
+      }
     }
+
     await window.app.terminals.createTerminal({
       id: newPane.id,
       projectId: project.id,
       cwd: newPane.cwd,
       shell
     });
-    set((state) => ({ panes: [...state.panes, newPane] }));
+
+    if (!doneSet) {
+      set((state) => ({ panes: [...state.panes, newPane] }));
+    }
     scheduleSave(() => void get().saveLayout());
   },
 
@@ -152,7 +196,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     const project = get().currentProject;
     const pane = get().panes.find((p) => p.id === id);
     if (!pane || !project) return;
-    const pos = computeNewPanePosition(get().panes, GRID_COLS, DEFAULT_PANE_H);
+
+    const panes = get().panes;
+    const pos = computeNewPanePosition(panes, GRID_COLS, DEFAULT_PANE_H);
     const newPane: TerminalPane = {
       id: nanoid(),
       projectId: project.id,
@@ -161,13 +207,23 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       shell: pane.shell,
       grid: pos
     };
+
+    // Proportional resize to keep everything on the fixed viewport.
+    const allH = panes.reduce((sum, p) => sum + p.grid.h, 0) + pos.h;
+    if (allH > DEFAULT_PANE_H) {
+      const { resized, nextGrid } = compactPanes(panes, pos);
+      newPane.grid = nextGrid;
+      set({ panes: [...resized, newPane] });
+    } else {
+      set((state) => ({ panes: [...state.panes, newPane] }));
+    }
+
     await window.app.terminals.createTerminal({
       id: newPane.id,
       projectId: project.id,
       cwd: newPane.cwd,
       shell: newPane.shell
     });
-    set((state) => ({ panes: [...state.panes, newPane] }));
     scheduleSave(() => void get().saveLayout());
   },
 

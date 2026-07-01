@@ -27,3 +27,31 @@
 .xterm .xterm-viewport {
   overflow-y: auto;
 }
+
+/* ── react-grid-layout resize handles (dark theme) ── */
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  bottom: 1px;
+  right: 1px;
+  cursor: se-resize;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(255, 255, 245, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 245, 0.35);
+}
+
+.react-grid-item:hover > .react-resizable-handle {
+  opacity: 1;
+}

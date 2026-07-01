@@ -1,16 +1,14 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GridLayout, { type Layout } from "react-grid-layout/legacy";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import type { TerminalPane as TerminalPaneType } from "@shared/types";
 import { useWorkspaceStore } from "@renderer/stores/workspace.store";
 import { TerminalPane } from "./TerminalPane";
+import { GRID_COLS, DEFAULT_PANE_H, GRID_MARGIN } from "./layout-utils";
+
+const MIN_W = 2;
+const MIN_H = 2;
 
 export function WorkspaceGrid(): React.JSX.Element {
   const panes = useWorkspaceStore((s) => s.panes);
@@ -18,15 +16,27 @@ export function WorkspaceGrid(): React.JSX.Element {
 
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setWidth(el.clientWidth));
+    const ro = new ResizeObserver(() => {
+      setWidth(el.clientWidth);
+      setHeight(el.clientHeight * 0.9);
+    });
     ro.observe(el);
     setWidth(el.clientWidth);
+    setHeight(el.clientHeight);
     return () => ro.disconnect();
   }, []);
+
+  // Dynamic rowHeight: DEFAULT_PANE_H grid rows fill the viewport exactly.
+  const rowHeight = useMemo(() => {
+    if (height <= 100) return 30;
+    const usable = height - 8; // margin cushion
+    return Math.max(20, Math.floor(usable / DEFAULT_PANE_H));
+  }, [height]);
 
   const layout: Layout = useMemo(
     () =>
@@ -36,8 +46,8 @@ export function WorkspaceGrid(): React.JSX.Element {
         y: p.grid.y,
         w: p.grid.w,
         h: p.grid.h,
-        minW: 2,
-        minH: 3
+        minW: MIN_W,
+        minH: MIN_H
       })),
     [panes]
   );
@@ -47,6 +57,7 @@ export function WorkspaceGrid(): React.JSX.Element {
       for (const item of next) {
         const pane = panes.find((p) => p.id === item.i);
         if (!pane) continue;
+
         if (
           pane.grid.x !== item.x ||
           pane.grid.y !== item.y ||
@@ -66,18 +77,23 @@ export function WorkspaceGrid(): React.JSX.Element {
   );
 
   return (
-    <div ref={wrapRef} className="h-full w-full overflow-auto p-1">
+    <div
+      ref={wrapRef}
+      className="mx-auto h-[95%] w-full max-w-[1400px] overflow-hidden"
+    >
       {width > 0 && (
         <GridLayout
           className="layout"
           layout={layout}
-          cols={12}
-          rowHeight={30}
+          cols={GRID_COLS}
+          rowHeight={rowHeight}
           width={width}
-          margin={[6, 6] as [number, number]}
+          margin={GRID_MARGIN}
           compactType={null}
+          maxRows={DEFAULT_PANE_H}
           onLayoutChange={onLayoutChange}
           draggableHandle=".terminal-drag-handle"
+          isResizable={true}
         >
           {panes.map((pane: TerminalPaneType) => (
             <div key={pane.id} className="overflow-hidden">

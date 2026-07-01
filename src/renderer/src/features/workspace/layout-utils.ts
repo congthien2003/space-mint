@@ -2,6 +2,10 @@ import type { TerminalPane } from "@shared/types";
 
 type Grid = TerminalPane["grid"];
 
+export const GRID_COLS = 12;
+export const DEFAULT_PANE_H = 8;
+export const GRID_MARGIN: [number, number] = [6, 6];
+
 /**
  * Split an existing pane either to the right or downwards.
  * The original pane keeps its top/left corner; the new pane takes the other half.

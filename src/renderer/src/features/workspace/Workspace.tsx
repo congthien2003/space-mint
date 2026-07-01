@@ -10,7 +10,7 @@ export function Workspace(): React.JSX.Element {
   return (
     <div className="flex flex-1 overflow-hidden">
       <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden bg-aw-bg">
+      <div className="flex flex-1 flex-col items-center overflow-hidden bg-aw-bg">
         {panes.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3">
             <p className="text-sm text-aw-text-soft">No terminals yet.</p>
