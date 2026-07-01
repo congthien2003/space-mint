@@ -37,15 +37,15 @@ export function FileTreeNode({
     <div>
       <div
         className={clsx(
-          "flex cursor-pointer items-center gap-1 rounded px-1 py-0.5 text-xs hover:bg-aw-bg-mute",
-          isDir ? "text-aw-text" : "text-aw-text-soft"
+          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[4px] text-xs leading-4 hover:bg-aw-bg-mute",
+          isDir ? "font-medium text-aw-text" : "text-aw-text-soft"
         )}
         style={{ paddingLeft: depth * 12 + 4 }}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
         title={node.path}
       >
-        <span className="w-3 text-center text-aw-text-soft">
+        <span className="w-3 text-center text-aw-text-muted">
           {isDir ? (isExpanded ? "▾" : "▸") : ""}
         </span>
         <span className="truncate">{node.name}</span>
@@ -75,12 +75,12 @@ export function FileTreeNode({
             }}
           />
           <div
-            className="fixed z-50 min-w-[180px] rounded border border-aw-border bg-aw-bg-soft py-1 text-xs text-aw-text shadow-lg"
+            className="fixed z-50 min-w-[180px] rounded-md border border-aw-border-strong bg-aw-bg-soft py-1 text-xs text-aw-text"
             style={{ left: menu.x, top: menu.y }}
           >
             {isDir && (
               <button
-                className="block w-full px-3 py-1 text-left hover:bg-aw-bg-mute"
+                className="block w-full px-3 py-1.5 text-left hover:bg-aw-bg-mute"
                 onClick={() => {
                   onOpenTerminal(node.path);
                   closeMenu();
@@ -90,7 +90,7 @@ export function FileTreeNode({
               </button>
             )}
             <button
-              className="block w-full px-3 py-1 text-left hover:bg-aw-bg-mute"
+              className="block w-full px-3 py-1.5 text-left hover:bg-aw-bg-mute"
               onClick={() => {
                 void navigator.clipboard?.writeText(node.path);
                 closeMenu();

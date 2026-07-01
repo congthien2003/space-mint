@@ -15,48 +15,51 @@ export function TopBar({
   onOpenSettings
 }: TopBarProps): React.JSX.Element {
   return (
-    <div className="flex h-12 items-center gap-3 border-b border-aw-border bg-aw-bg-soft px-4">
+    <div className="flex h-16 items-center gap-4 border-b border-aw-border bg-aw-bg px-5">
       {project ? (
         <>
           <button
-            className="rounded px-2 py-1 text-sm text-aw-text-soft hover:bg-aw-bg-mute hover:text-aw-text"
+            className="rounded-md border border-aw-border-strong bg-aw-bg-soft px-3 py-2 text-sm font-medium text-aw-text hover:bg-aw-bg-mute"
             onClick={onBack}
           >
             ← Projects
           </button>
-          <div className="flex min-w-0 flex-col">
-            <span className="truncate text-sm font-semibold text-aw-text">
+          <div className="min-w-0 flex-1">
+            <span className="block truncate text-base font-semibold leading-5 text-aw-text">
               {project.name}
             </span>
             <span
-              className="truncate text-xs text-aw-text-soft"
+              className="block truncate font-mono text-[11px] leading-4 text-aw-text-soft"
               title={project.path}
             >
               {project.path}
             </span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <button
               className={clsx(
-                "rounded px-3 py-1 text-sm",
-                "bg-aw-accent text-white hover:opacity-90"
+                "h-10 rounded-md px-4 text-sm font-medium",
+                "bg-aw-accent text-white hover:bg-aw-accent-active"
               )}
               onClick={onAddTerminal}
             >
               + Terminal
             </button>
             <button
-              className="rounded px-2 py-1 text-sm text-aw-text-soft hover:bg-aw-bg-mute hover:text-aw-text"
+              className="h-10 rounded-md border border-aw-border bg-aw-bg-soft px-3 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
               onClick={onOpenSettings}
             >
-              ⚙ Settings
+              Settings
             </button>
           </div>
         </>
       ) : (
-        <span className="text-sm font-semibold text-aw-text">
-          Agent Workspace
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="h-3 w-3 rounded-sm bg-aw-accent" />
+          <span className="text-sm font-semibold text-aw-text">
+            Agent Workspace
+          </span>
+        </div>
       )}
     </div>
   );

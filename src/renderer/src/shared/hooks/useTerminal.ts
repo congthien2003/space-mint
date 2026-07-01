@@ -11,19 +11,19 @@ interface UseTerminalOptions {
 }
 
 const darkTheme: ITheme = {
-  background: "#1b1b1f",
-  foreground: "rgba(255,255,245,0.86)",
-  cursor: "rgba(255,255,245,0.86)",
-  cursorAccent: "#1b1b1f",
-  selectionBackground: "rgba(105,136,230,0.4)"
+  background: "#171714",
+  foreground: "rgba(250,250,247,0.88)",
+  cursor: "rgba(250,250,247,0.88)",
+  cursorAccent: "#171714",
+  selectionBackground: "rgba(229,57,53,0.32)"
 };
 
 const lightTheme: ITheme = {
-  background: "#ffffff",
-  foreground: "#1b1b1f",
-  cursor: "#1b1b1f",
-  cursorAccent: "#ffffff",
-  selectionBackground: "rgba(105,136,230,0.25)"
+  background: "#fafaf7",
+  foreground: "#26251e",
+  cursor: "#26251e",
+  cursorAccent: "#fafaf7",
+  selectionBackground: "rgba(229,57,53,0.2)"
 };
 
 function themeFor(theme: "dark" | "light"): ITheme {

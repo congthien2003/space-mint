@@ -79,7 +79,7 @@ export function WorkspaceGrid(): React.JSX.Element {
   return (
     <div
       ref={wrapRef}
-      className="mx-auto h-[95%] w-full max-w-[1400px] overflow-hidden"
+      className="mx-auto h-full w-full max-w-[1080px] overflow-hidden"
     >
       {width > 0 && (
         <GridLayout

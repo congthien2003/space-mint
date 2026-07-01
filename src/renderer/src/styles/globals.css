@@ -12,8 +12,8 @@
   }
 
   body {
-    background-color: #1b1b1f;
-    color: rgba(255, 255, 245, 0.86);
+    background-color: #f7f7f4;
+    color: #26251e;
     font-family:
       Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -21,6 +21,17 @@
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
     user-select: none;
+  }
+
+  ::selection {
+    background-color: rgba(229, 57, 53, 0.18);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
   }
 }
 
@@ -48,8 +59,8 @@
   bottom: 2px;
   width: 8px;
   height: 8px;
-  border-right: 2px solid rgba(255, 255, 245, 0.35);
-  border-bottom: 2px solid rgba(255, 255, 245, 0.35);
+  border-right: 2px solid rgba(250, 250, 247, 0.38);
+  border-bottom: 2px solid rgba(250, 250, 247, 0.38);
 }
 
 .react-grid-item:hover > .react-resizable-handle {

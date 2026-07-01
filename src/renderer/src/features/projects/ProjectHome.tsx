@@ -9,33 +9,39 @@ export function ProjectHome(): React.JSX.Element {
 
   return (
     <div className="flex flex-1 overflow-y-auto bg-aw-bg">
-      <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-6 py-10">
-        <div className="flex items-center justify-between">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-8 py-10">
+        <div className="flex items-start justify-between gap-6 border-b border-aw-border pb-6">
           <div>
-            <h2 className="text-lg font-semibold text-aw-text">
+            <p className="mb-2 text-[11px] font-semibold uppercase text-aw-text-soft">
+              Local workspaces
+            </p>
+            <h2 className="text-3xl font-normal leading-tight text-aw-text">
               Agent Workspace
             </h2>
-            <p className="text-sm text-aw-text-soft">
-              Add a local project to open a multi-terminal workspace.
+            <p className="mt-2 max-w-xl text-sm leading-6 text-aw-text-soft">
+              Open a project, browse its files, and arrange real terminal
+              sessions in a saved workspace.
             </p>
           </div>
           <AddProjectButton />
         </div>
 
         {error && (
-          <p className="rounded border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-300">
+          <p className="rounded-md border border-aw-error/30 bg-aw-error/10 px-3 py-2 text-sm text-aw-error">
             {error}
           </p>
         )}
 
         {loading ? (
-          <p className="text-sm text-aw-text-soft">Loading projects…</p>
+          <p className="text-sm text-aw-text-soft">Loading projects...</p>
         ) : projects.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-aw-border px-6 py-12 text-center">
-            <p className="text-sm text-aw-text-soft">No project added yet.</p>
-            <p className="mt-1 text-xs text-aw-text-soft">
-              Click <span className="text-aw-text">Add Project</span> to choose a
-              folder.
+          <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-8 py-14 text-center">
+            <p className="text-base font-medium text-aw-text">
+              No project added yet.
+            </p>
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-aw-text-soft">
+              Choose a local folder to start a workspace with file tree access
+              and terminal panes.
             </p>
           </div>
         ) : (

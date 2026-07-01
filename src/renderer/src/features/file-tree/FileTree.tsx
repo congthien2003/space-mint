@@ -31,11 +31,13 @@ export function FileTree({ projectPath }: Props): React.JSX.Element {
 
   if (loading) {
     return (
-      <p className="px-2 py-4 text-center text-xs text-aw-text-soft">Loading…</p>
+      <p className="px-2 py-4 text-center text-xs text-aw-text-soft">
+        Loading...
+      </p>
     );
   }
   if (error) {
-    return <p className="px-2 py-4 text-center text-xs text-red-400">{error}</p>;
+    return <p className="px-2 py-4 text-center text-xs text-aw-error">{error}</p>;
   }
   if (roots.length === 0) {
     return (

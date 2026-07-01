@@ -21,7 +21,7 @@ export function App(): React.JSX.Element {
   }, [loadProjects, loadSettings]);
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-screen flex-col bg-aw-bg text-aw-text">
       <TopBar
         project={currentProject}
         onBack={() => void closeProject()}

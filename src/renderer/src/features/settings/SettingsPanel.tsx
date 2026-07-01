@@ -31,23 +31,33 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
     onClose();
   };
 
+  const labelClass =
+    "mb-1.5 block text-[11px] font-semibold uppercase text-aw-text-soft";
+  const inputClass =
+    "w-full rounded-md border border-aw-border bg-aw-bg px-3 py-2 text-sm text-aw-text outline-none focus:border-aw-border-strong";
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-aw-text/30 px-4"
       onClick={onClose}
     >
       <div
-        className="max-h-[80vh] w-[480px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-6"
+        className="max-h-[82vh] w-full max-w-[520px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="mb-4 text-base font-semibold text-aw-text">Settings</h3>
+        <div className="mb-6 border-b border-aw-border pb-4">
+          <p className="text-[11px] font-semibold uppercase text-aw-text-soft">
+            Workspace
+          </p>
+          <h3 className="mt-1 text-2xl font-normal text-aw-text">
+            Settings
+          </h3>
+        </div>
 
-        <label className="mb-1 block text-xs text-aw-text-soft">
-          Default shell
-        </label>
+        <label className={labelClass}>Default shell</label>
         <input
           list="shell-suggestions"
-          className="mb-4 w-full rounded bg-aw-bg-mute px-2 py-1 text-sm text-aw-text outline-none"
+          className={`${inputClass} mb-4`}
           value={defaultShell}
           onChange={(e) => setDefaultShell(e.target.value)}
           placeholder="Leave empty for platform default"
@@ -58,23 +68,19 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
           ))}
         </datalist>
 
-        <label className="mb-1 block text-xs text-aw-text-soft">
-          Terminal font size
-        </label>
+        <label className={labelClass}>Terminal font size</label>
         <input
           type="number"
           min={8}
           max={32}
-          className="mb-4 w-24 rounded bg-aw-bg-mute px-2 py-1 text-sm text-aw-text outline-none"
+          className={`${inputClass} mb-4 w-28`}
           value={fontSize}
           onChange={(e) => setFontSize(e.target.value)}
         />
 
-        <label className="mb-1 block text-xs text-aw-text-soft">
-          Terminal theme
-        </label>
+        <label className={labelClass}>Terminal theme</label>
         <select
-          className="mb-4 w-40 rounded bg-aw-bg-mute px-2 py-1 text-sm text-aw-text outline-none"
+          className={`${inputClass} mb-4 w-44`}
           value={theme}
           onChange={(e) => setTheme(e.target.value as "dark" | "light")}
         >
@@ -82,25 +88,25 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
           <option value="light">Light</option>
         </select>
 
-        <label className="mb-1 block text-xs text-aw-text-soft">
+        <label className={labelClass}>
           Ignored folders (one per line)
         </label>
         <textarea
           rows={6}
-          className="mb-4 w-full rounded bg-aw-bg-mute px-2 py-1 font-mono text-xs text-aw-text outline-none"
+          className={`${inputClass} mb-5 font-mono text-xs leading-5`}
           value={ignored}
           onChange={(e) => setIgnored(e.target.value)}
         />
 
         <div className="flex justify-end gap-2">
           <button
-            className="rounded bg-aw-bg-mute px-3 py-1.5 text-sm text-aw-text hover:opacity-80"
+            className="h-10 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className="rounded bg-aw-accent px-3 py-1.5 text-sm text-white hover:opacity-90"
+            className="h-10 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active"
             onClick={() => void save()}
           >
             Save
