@@ -10,6 +10,11 @@ export default defineConfig({
         "@main": resolve("src/main"),
         "@shared": resolve("src/shared")
       }
+    },
+    build: {
+      rollupOptions: {
+        external: ["electron-store"]
+      }
     }
   },
   preload: {

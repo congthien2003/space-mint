@@ -4,10 +4,16 @@ import type { Project } from "@shared/types";
 interface TopBarProps {
   project: Project | null;
   onBack: () => void;
+  onAddTerminal: () => void;
   onOpenSettings: () => void;
 }
 
-export function TopBar({ project, onBack, onOpenSettings }: TopBarProps): React.JSX.Element {
+export function TopBar({
+  project,
+  onBack,
+  onAddTerminal,
+  onOpenSettings
+}: TopBarProps): React.JSX.Element {
   return (
     <div className="flex h-12 items-center gap-3 border-b border-aw-border bg-aw-bg-soft px-4">
       {project ? (
@@ -18,9 +24,16 @@ export function TopBar({ project, onBack, onOpenSettings }: TopBarProps): React.
           >
             ← Projects
           </button>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold text-aw-text">{project.name}</span>
-            <span className="text-xs text-aw-text-soft">{project.path}</span>
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-semibold text-aw-text">
+              {project.name}
+            </span>
+            <span
+              className="truncate text-xs text-aw-text-soft"
+              title={project.path}
+            >
+              {project.path}
+            </span>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <button
@@ -28,8 +41,7 @@ export function TopBar({ project, onBack, onOpenSettings }: TopBarProps): React.
                 "rounded px-3 py-1 text-sm",
                 "bg-aw-accent text-white hover:opacity-90"
               )}
-              disabled
-              title="Available in Phase 2"
+              onClick={onAddTerminal}
             >
               + Terminal
             </button>
@@ -42,7 +54,9 @@ export function TopBar({ project, onBack, onOpenSettings }: TopBarProps): React.
           </div>
         </>
       ) : (
-        <span className="text-sm font-semibold text-aw-text">Agent Workspace</span>
+        <span className="text-sm font-semibold text-aw-text">
+          Agent Workspace
+        </span>
       )}
     </div>
   );

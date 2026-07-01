@@ -3,9 +3,13 @@ import { basename } from "node:path";
 import { nanoid } from "nanoid";
 import type { Project } from "@shared/types";
 import type { AppStore } from "../store/AppStore";
+import type { LayoutService } from "./LayoutService";
 
 export class ProjectService {
-  constructor(private store: AppStore) {}
+  constructor(
+    private store: AppStore,
+    private layoutService?: LayoutService
+  ) {}
 
   addProject(path: string): Project {
     if (!existsSync(path)) {
@@ -35,5 +39,6 @@ export class ProjectService {
   remove(id: string): void {
     const projects = this.store.get("projects");
     this.store.set("projects", projects.filter((p) => p.id !== id));
+    this.layoutService?.remove(id);
   }
 }

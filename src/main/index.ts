@@ -4,9 +4,15 @@ import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import { AppStore } from "./store/AppStore";
 import { ProjectService } from "./services/ProjectService";
 import { SettingsService } from "./services/SettingsService";
+import { FileTreeService } from "./services/FileTreeService";
+import { TerminalService } from "./services/TerminalService";
+import { LayoutService } from "./services/LayoutService";
 import { registerAllIpc } from "./ipc";
 
 let mainWindow: BrowserWindow | null = null;
+
+// Created at module load so we can kill all PTYs on before-quit.
+const terminalService = new TerminalService();
 
 function createWindow(): void {
   mainWindow = new BrowserWindow({
@@ -45,10 +51,18 @@ app.whenReady().then(() => {
   });
 
   const appStore = new AppStore();
-  const projectService = new ProjectService(appStore);
+  const layoutService = new LayoutService(appStore);
+  const projectService = new ProjectService(appStore, layoutService);
   const settingsService = new SettingsService(appStore);
+  const fileTreeService = new FileTreeService();
 
-  registerAllIpc(projectService, settingsService);
+  registerAllIpc(
+    projectService,
+    settingsService,
+    fileTreeService,
+    terminalService,
+    layoutService
+  );
 
   createWindow();
 
@@ -63,4 +77,9 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+// Make sure no shell processes survive the app.
+app.on("before-quit", () => {
+  terminalService.killAll();
 });

@@ -1,6 +1,12 @@
-import Store from "electron-store";
+import StoreModule from "electron-store";
 import type { Project, WorkspaceLayout, AppSettings } from "@shared/types";
 import { DEFAULT_SETTINGS } from "@shared/types";
+
+// electron-store v11+ is ESM-only. When electron-vite's CJS build requires it,
+// the module namespace is returned — the Store constructor lives at .default.
+const Store: typeof StoreModule =
+  (StoreModule as unknown as { default: typeof StoreModule }).default ??
+  StoreModule;
 
 type StoreSchema = {
   projects: Project[];
@@ -9,7 +15,7 @@ type StoreSchema = {
 };
 
 export class AppStore {
-  private store: Store<StoreSchema>;
+  private store: StoreModule<StoreSchema>;
 
   constructor() {
     this.store = new Store<StoreSchema>({

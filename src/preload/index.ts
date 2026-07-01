@@ -26,6 +26,7 @@ const app = {
 
   terminals: {
     createTerminal: (opts: {
+      id?: string;
       projectId: string;
       cwd: string;
       shell?: string;
