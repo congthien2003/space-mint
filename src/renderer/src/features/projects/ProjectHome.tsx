@@ -9,13 +9,13 @@ export function ProjectHome(): React.JSX.Element {
 
   return (
     <div className="flex flex-1 overflow-y-auto bg-aw-bg">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-8 py-10">
-        <div className="flex items-start justify-between gap-6 border-b border-aw-border pb-6">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-6">
+        <div className="flex items-start justify-between gap-4 border-b border-aw-border pb-4">
           <div>
             <p className="mb-2 text-[11px] font-semibold uppercase text-aw-text-soft">
               Local workspaces
             </p>
-            <h2 className="text-3xl font-normal leading-tight text-aw-text">
+            <h2 className="text-2xl font-normal leading-tight text-aw-text">
               Agent Workspace
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-aw-text-soft">
@@ -35,7 +35,7 @@ export function ProjectHome(): React.JSX.Element {
         {loading ? (
           <p className="text-sm text-aw-text-soft">Loading projects...</p>
         ) : projects.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-8 py-14 text-center">
+          <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-6 py-10 text-center">
             <p className="text-base font-medium text-aw-text">
               No project added yet.
             </p>
