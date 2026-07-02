@@ -56,7 +56,7 @@ export function useTerminal(
     const terminal = new Terminal({
       fontSize: optsRef.current.fontSize,
       fontFamily:
-        "ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace",
+        '"Cascadia Code", "HasklugNerdFont", ui-monospace, Consolas, monospace',
       theme: themeFor(optsRef.current.theme),
       cursorBlink: true,
       allowProposedApi: true

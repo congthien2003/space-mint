@@ -9,6 +9,8 @@ import { useSettingsStore } from "@renderer/stores/settings.store";
 
 export function App(): React.JSX.Element {
   const [showSettings, setShowSettings] = useState(false);
+  const [showLeftSidebar, setShowLeftSidebar] = useState(true);
+  const [showRightPreview, setShowRightPreview] = useState(true);
   const currentProject = useWorkspaceStore((s) => s.currentProject);
   const addPane = useWorkspaceStore((s) => s.addPane);
   const closeProject = useWorkspaceStore((s) => s.closeProject);
@@ -32,8 +34,21 @@ export function App(): React.JSX.Element {
           })
         }
         onOpenSettings={() => setShowSettings(true)}
+        showLeftSidebar={showLeftSidebar}
+        showRightPreview={showRightPreview}
+        onToggleLeftSidebar={() => setShowLeftSidebar((value) => !value)}
+        onToggleRightPreview={() => setShowRightPreview((value) => !value)}
       />
-      {currentProject ? <Workspace /> : <ProjectHome />}
+      {currentProject ? (
+        <Workspace
+          showLeftSidebar={showLeftSidebar}
+          showRightPreview={showRightPreview}
+          onToggleLeftSidebar={() => setShowLeftSidebar((value) => !value)}
+          onToggleRightPreview={() => setShowRightPreview((value) => !value)}
+        />
+      ) : (
+        <ProjectHome />
+      )}
       {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
     </div>
   );

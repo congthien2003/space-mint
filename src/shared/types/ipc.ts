@@ -6,6 +6,7 @@ export const IPC = {
   PROJECT_SELECT_FOLDER: "project:select-folder",
   FILE_READ_DIRECTORY: "file:read-directory",
   FILE_READ_CHILDREN: "file:read-children",
+  FILE_READ_TEXT: "file:read-text",
   TERMINAL_CREATE: "terminal:create",
   TERMINAL_WRITE: "terminal:write",
   TERMINAL_RESIZE: "terminal:resize",

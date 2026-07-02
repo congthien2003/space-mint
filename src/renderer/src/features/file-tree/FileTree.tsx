@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useFileTreeStore } from "./file-tree.store";
 import { FileTreeNode } from "./FileTreeNode";
 import { useWorkspaceStore } from "@renderer/stores/workspace.store";
+import { useFilePreviewStore } from "@renderer/features/file-preview/file-preview.store";
+import type { FileTreeNode as NodeType } from "@shared/types";
 
 interface Props {
   projectPath: string;
@@ -19,14 +21,23 @@ export function FileTree({ projectPath }: Props): React.JSX.Element {
   const loadRoot = useFileTreeStore((s) => s.loadRoot);
   const reset = useFileTreeStore((s) => s.reset);
   const addPane = useWorkspaceStore((s) => s.addPane);
+  const previewFile = useFilePreviewStore((s) => s.previewFile);
+  const resetPreview = useFilePreviewStore((s) => s.reset);
 
   useEffect(() => {
     void loadRoot(projectPath);
-    return () => reset();
-  }, [projectPath, loadRoot, reset]);
+    return () => {
+      reset();
+      resetPreview();
+    };
+  }, [projectPath, loadRoot, reset, resetPreview]);
 
   const handleOpenTerminal = (folderPath: string): void => {
     void addPane({ cwd: folderPath, title: baseName(folderPath) });
+  };
+
+  const handlePreviewFile = (file: NodeType): void => {
+    void previewFile(file);
   };
 
   if (loading) {
@@ -55,6 +66,7 @@ export function FileTree({ projectPath }: Props): React.JSX.Element {
           node={node}
           depth={0}
           onOpenTerminal={handleOpenTerminal}
+          onPreviewFile={handlePreviewFile}
         />
       ))}
     </div>

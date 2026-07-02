@@ -16,4 +16,8 @@ export function registerFileIpc(
     const ignored = settingsService.get().ignoredFolders;
     return fileTreeService.readChildren(folderPath, ignored);
   });
+
+  ipcMain.handle(IPC.FILE_READ_TEXT, (_event, filePath: string) => {
+    return fileTreeService.readTextFile(filePath);
+  });
 }
