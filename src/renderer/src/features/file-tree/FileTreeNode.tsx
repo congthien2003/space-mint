@@ -43,7 +43,7 @@ export function FileTreeNode({
     <div>
       <div
         className={clsx(
-          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[4px] text-xs leading-4 hover:bg-aw-bg-mute",
+          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[3px] text-xs leading-4 hover:bg-aw-bg-mute",
           isDir ? "font-medium text-aw-text" : "text-aw-text-soft"
         )}
         style={{ paddingLeft: depth * 12 + 4 }}
