@@ -11,14 +11,14 @@ export function ProjectList({ projects }: Props): React.JSX.Element {
   const removeProject = useProjectsStore((s) => s.removeProject);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1.5">
       <p className="text-[11px] font-semibold uppercase text-aw-text-soft">
         Recent Projects
       </p>
       {projects.map((project) => (
         <div
           key={project.id}
-          className="group flex items-center gap-3 rounded-lg border border-aw-border bg-aw-bg-soft px-4 py-3 hover:border-aw-border-strong"
+          className="group flex items-center gap-3 rounded-lg border border-aw-border bg-aw-bg-soft px-3 py-2 hover:border-aw-border-strong"
         >
           <button
             className="flex min-w-0 flex-1 flex-col items-start text-left"
