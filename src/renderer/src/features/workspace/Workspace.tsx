@@ -1,5 +1,5 @@
 import { Sidebar } from "@renderer/shared/components/Sidebar";
-import { WorkspaceGrid } from "./WorkspaceGrid";
+import { WorkspacePanels } from "./WorkspacePanels";
 import { useWorkspaceStore } from "@renderer/stores/workspace.store";
 
 export function Workspace(): React.JSX.Element {
@@ -35,7 +35,7 @@ export function Workspace(): React.JSX.Element {
             </button>
           </div>
         ) : (
-          <WorkspaceGrid />
+          <WorkspacePanels />
         )}
       </div>
     </div>

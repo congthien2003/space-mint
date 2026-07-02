@@ -2,7 +2,7 @@ import type { WorkspaceLayout } from "@shared/types";
 import type { AppStore } from "../store/AppStore";
 
 /**
- * Persists the terminal grid layout per project in electron-store.
+ * Persists terminal pane metadata and the split-tree layout per project.
  */
 export class LayoutService {
   constructor(private store: AppStore) {}
