@@ -22,14 +22,14 @@ export function FilePreviewPanel({
 
   return (
     <aside className="flex h-full w-[360px] shrink-0 flex-col overflow-hidden border-l border-aw-border bg-aw-bg-soft">
-      <div className="border-b border-aw-border px-4 py-3">
+      <div className="border-b border-aw-border px-3 py-2">
         <div className="flex items-center justify-between">
           <p className="text-[11px] font-semibold uppercase text-aw-text-soft">
             Preview
           </p>
           <button
             type="button"
-            className="flex h-7 w-7 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft transition hover:border-aw-border-strong hover:text-aw-text"
+            className="flex h-6 w-6 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft transition hover:border-aw-border-strong hover:text-aw-text"
             title="Hide preview sidebar"
             aria-label="Hide preview sidebar"
             onClick={onToggle}
@@ -71,8 +71,8 @@ export function FilePreviewPanel({
 
       <div className="min-h-0 flex-1 overflow-hidden">
         {!selectedFile ? (
-          <div className="flex h-full items-center justify-center px-8 text-center">
-            <p className="text-sm leading-6 text-aw-text-soft">
+          <div className="flex h-full items-center justify-center px-6 text-center">
+            <p className="rounded-lg border border-aw-border bg-aw-bg px-3 py-6 text-sm leading-6 text-aw-text-soft">
               Select a file to preview.
             </p>
           </div>
@@ -87,14 +87,14 @@ export function FilePreviewPanel({
             </p>
           </div>
         ) : (
-          <pre className="h-full overflow-auto whitespace-pre-wrap break-words bg-aw-bg px-4 py-3 font-mono text-[12px] leading-5 text-aw-text">
+          <pre className="h-full overflow-auto whitespace-pre-wrap break-words bg-aw-bg px-3 py-2 font-mono text-[12px] leading-5 text-aw-text">
             {content || " "}
           </pre>
         )}
       </div>
 
       {selectedFile && !loading && !error && (
-        <div className="border-t border-aw-border px-4 py-2 text-[10px] text-aw-text-muted">
+        <div className="border-t border-aw-border px-3 py-1.5 text-[10px] text-aw-text-muted">
           {formatBytes(size)}
         </div>
       )}
