@@ -100,6 +100,7 @@ CursorGothic is licensed. Open-source substitute: **Inter** at weight 400 with l
 - **Base unit:** 4px.
 - **Tokens:** `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.base}` 16px · `{spacing.md}` 20px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.section}` 80px.
 - **Section padding:** 80px.
+- **App Density (in-product surfaces):** Use the compact end of the scale — `xs`/`sm` for region padding, `xxs`/`xs` for gaps, `xs`-`sm` for control heights. The `section`/`xxl` tokens apply to marketing pages only.
 
 ### Grid & Container
 
@@ -110,11 +111,13 @@ CursorGothic is licensed. Open-source substitute: **Inter** at weight 400 with l
 
 ### Whitespace Philosophy
 
-Generous editorial pacing — closer to a print magazine than a tech site. The cream canvas has plenty of breathing room; cards within bands sit close (16-24px gap).
+Compact developer density — tight 8-12px region padding, 6-8px gaps. Regions are defined by 1px hairline borders rather than whitespace alone. Controls stay at 28px (chrome) / 24px (inline) / 32px (modal) heights.
 
 ## Elevation & Depth
 
 The system uses **hairline-only depth**. No drop shadows, no elevation tiers. Cards float above the canvas via 1px hairlines and the slight white-on-cream contrast.
+
+Every discrete region (panel, card, section, empty state) carries a 1px `hairline` (`#e6e5e0`) outline. List rows and menu items use background/hover for separation — never borders.
 
 | Level           | Treatment                         | Use                     |
 | --------------- | --------------------------------- | ----------------------- |
@@ -138,12 +141,22 @@ The system uses **hairline-only depth**. No drop shadows, no elevation tiers. Ca
 | `{rounded.xs}`   | 4px    | Inline tags                 |
 | `{rounded.sm}`   | 6px    | Compact rows                |
 | `{rounded.md}`   | 8px    | CTA buttons, form inputs    |
-| `{rounded.lg}`   | 12px   | Cards, IDE panes            |
+| `{rounded.lg}`   | 8px    | Cards, IDE panes, panels, modal |
 | `{rounded.xl}`   | 16px   | Larger feature cards (rare) |
 | `{rounded.pill}` | 9999px | Timeline pills, badges      |
 | `{rounded.full}` | 9999px | Avatars (rare)              |
 
 ## Components
+
+### App Density Overrides
+
+In-product surfaces override the marketing defaults with a compact developer density:
+
+- **TopBar height:** 48px.
+- **Control heights:** 28px (chrome controls), 24px (inline actions), 32px (modal buttons).
+- **Region padding:** 12px × 8px (`px-3 py-2`); inner body areas go tighter.
+- **Card/pane radius:** 8px (`rounded-lg`); chrome control radius: 6px (`rounded-md`).
+- **Border rule:** Every region gets a 1px `hairline` (`#e6e5e0`) outline; list rows and menu items do not.
 
 ### Top Navigation
 
