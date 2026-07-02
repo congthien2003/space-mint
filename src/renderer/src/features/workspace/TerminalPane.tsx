@@ -39,13 +39,13 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
   };
 
   const actionButtonClass =
-    "flex h-7 w-7 items-center justify-center rounded-md text-xs text-aw-text-soft hover:bg-aw-bg-mute hover:text-aw-text";
+    "flex h-6 w-6 items-center justify-center rounded-md text-xs text-aw-text-soft hover:bg-aw-bg-mute hover:text-aw-text";
   const terminalBodyClass =
     settings.terminalTheme === "dark" ? "bg-aw-terminal" : "bg-aw-terminal-light";
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden rounded-lg border border-aw-border bg-aw-bg-soft">
-      <div className="flex items-center gap-2 border-b border-aw-border bg-aw-bg-soft px-2 py-1.5">
+      <div className="flex items-center gap-2 border-b border-aw-border bg-aw-bg-soft px-2.5 py-1">
         <span
           className="terminal-drag-handle cursor-grab rounded px-1 text-aw-text-muted hover:bg-aw-bg-mute hover:text-aw-text"
           title="Drag to move"
@@ -125,7 +125,7 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
             ✎
           </button>
           <button
-            className="flex h-7 w-7 items-center justify-center rounded-md text-xs text-aw-error hover:bg-aw-error/10"
+            className="flex h-6 w-6 items-center justify-center rounded-md text-xs text-aw-error hover:bg-aw-error/10"
             title="Close"
             onClick={() => removePane(pane.id)}
           >
