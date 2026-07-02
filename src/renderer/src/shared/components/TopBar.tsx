@@ -13,6 +13,13 @@ interface TopBarProps {
   onToggleRightPreview: () => void;
 }
 
+function getPathSegments(path: string): string[] {
+  return path
+    .split(/[/\\]+/)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+}
+
 export function TopBar({
   project,
   onBack,
@@ -25,6 +32,7 @@ export function TopBar({
 }: TopBarProps): React.JSX.Element {
   const toggleButtonClass =
     "flex h-7 w-7 items-center justify-center rounded-md border text-xs font-medium transition";
+  const pathSegments = project ? getPathSegments(project.path) : [];
 
   return (
     <div className="flex h-12 items-center gap-3 border-b border-aw-border bg-aw-bg px-3">
@@ -38,15 +46,35 @@ export function TopBar({
             <span>Projects</span>
           </button>
           <div className="min-w-0 flex-1">
-            <span className="block truncate text-base font-mono font-medium leading-5 text-aw-text">
-              {project.name}
-            </span>
-            <span
-              className="block truncate font-mono text-[10px] leading-4 text-aw-text-soft"
+            <div
+              className="flex min-w-0 items-center gap-2 overflow-hidden font-mono text-[12px] leading-4 text-aw-text-soft"
               title={project.path}
             >
-              {project.path}
-            </span>
+              {pathSegments.map((segment, index) => {
+                const isLast = index === pathSegments.length - 1;
+
+                return (
+                  <div
+                    key={`${segment}-${index}`}
+                    className="flex min-w-0 items-center gap-2"
+                  >
+                    <span
+                      className={clsx(
+                        "truncate",
+                        isLast && "font-semibold text-aw-text"
+                      )}
+                    >
+                      {segment}
+                    </span>
+                    {!isLast ? (
+                      <span aria-hidden="true" className="text-aw-text-soft">
+                        &gt;
+                      </span>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -96,9 +124,7 @@ export function TopBar({
       ) : (
         <div className="flex items-center gap-3">
           <span className="h-3 w-3 rounded-sm bg-aw-accent" />
-          <span className="text-sm font-semibold text-aw-text">
-            Agent Workspace
-          </span>
+          <span className="text-sm font-semibold text-aw-text">Space Mint</span>
         </div>
       )}
     </div>

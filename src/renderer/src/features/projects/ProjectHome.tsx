@@ -32,7 +32,7 @@ export function ProjectHome(): React.JSX.Element {
                 Local workspaces
               </p>
               <h2 className="text-2xl font-normal leading-tight text-aw-text">
-                Agent Workspace
+                Space Mint
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-aw-text-soft">
                 Open a project, browse its files, and arrange real terminal
@@ -74,7 +74,7 @@ export function ProjectHome(): React.JSX.Element {
         title="Remove project from recent list?"
         description={
           projectPendingRemoval
-            ? `${projectPendingRemoval.name} will be removed from Agent Workspace only. The folder and its files stay untouched on disk.`
+            ? `${projectPendingRemoval.name} will be removed from Space Mint only. The folder and its files stay untouched on disk.`
             : ""
         }
         confirmLabel="Remove from list"

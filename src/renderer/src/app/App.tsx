@@ -65,7 +65,7 @@ export function App(): React.JSX.Element {
         title="Return to project list?"
         description={
           currentProject
-            ? `You will leave ${currentProject.name} and return to the recent project list. This does not remove the project from Agent Workspace.`
+            ? `You will leave ${currentProject.name} and return to the recent project list. This does not remove the project from Space Mint.`
             : ""
         }
         confirmLabel="Back to projects"

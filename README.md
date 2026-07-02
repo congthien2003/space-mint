@@ -1,12 +1,12 @@
-# Agent Workspace
+# Space Mint
 
-Agent Workspace is an Electron desktop app for developers who work across multiple local projects and run several terminal-based tools or AI coding agents at the same time.
+Space Mint is an Electron desktop app for developers who work across multiple local projects and run several terminal-based tools or AI coding agents at the same time.
 
 Phase 1 focuses on a project-based multi-terminal workspace: add a local project, browse its file tree, open real terminal panes, arrange them in a grid, and restore the saved layout per project.
 
 ## Phase 1 Scope
 
-Agent Workspace is designed as a lightweight workspace manager, not a full IDE or VS Code replacement.
+Space Mint is designed as a lightweight workspace manager, not a full IDE or VS Code replacement.
 
 Phase 1 includes:
 

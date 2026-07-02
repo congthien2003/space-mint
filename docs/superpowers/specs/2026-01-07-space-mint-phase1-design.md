@@ -1,4 +1,4 @@
-# Agent Workspace — Phase 1 Design
+# Space Mint — Phase 1 Design
 
 - **Ngày:** 2026-01-07
 - **Trạng thái:** Approved (design review)
@@ -723,6 +723,5 @@ Cách xử lý: Main process giữ map terminalId → ptyProcess, kill all trong
 - True terminal session restore after the app exits (chỉ restore layout, tạo fresh terminal).
 - Git UI phức tạp.
 - Daemon giữ terminal sống sau khi đóng app.
-
 
 

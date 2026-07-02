@@ -10,7 +10,7 @@
 
 **Tech Stack:** Electron 39, node-pty, @xterm/xterm, @xterm/addon-fit, @xterm/addon-web-links, React 19.
 
-**Spec reference:** `docs/superpowers/specs/2026-01-07-agent-workspace-phase1-design.md` (Sections 7, 9.3, 9.4, 10)
+**Spec reference:** `docs/superpowers/specs/2026-01-07-space-mint-phase1-design.md` (Sections 7, 9.3, 9.4, 10)
 
 ---
 

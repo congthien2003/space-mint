@@ -22,7 +22,7 @@ function createWindow(): void {
     minHeight: 700,
     show: false,
     autoHideMenuBar: true,
-    title: "Agent Workspace",
+    title: "Space Mint",
     backgroundColor: "#1b1b1f",
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
@@ -44,7 +44,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId("com.agentworkspace.app");
+  electronApp.setAppUserModelId("com.spacemint.app");
 
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);

@@ -8,7 +8,7 @@
 
 **Tech Stack:** Electron 39, electron-vite, React 19, TypeScript 5.9, Tailwind CSS v3, Zustand, nanoid, clsx.
 
-**Spec reference:** `docs/superpowers/specs/2026-01-07-agent-workspace-phase1-design.md` (Sections 2, 3, 4, 5, 6, 11)
+**Spec reference:** `docs/superpowers/specs/2026-01-07-space-mint-phase1-design.md` (Sections 2, 3, 4, 5, 6, 11)
 
 ---
 
@@ -52,7 +52,7 @@
 | `src/preload/index.d.ts` | Update type declaration cho `window.app` |
 | `src/shared/types/global.d.ts` | Update reference sang `window.app` |
 | `src/renderer/src/main.tsx` | Import globals.css thay main.css |
-| `src/renderer/index.html` | Title "Agent Workspace" |
+| `src/renderer/index.html` | Title "Space Mint" |
 | `tsconfig.node.json` | Include `src/shared/**/*`, paths `@shared/*` |
 | `tsconfig.web.json` | Include `src/shared/**/*`, paths `@shared/*` |
 | `package.json` | Thêm zustand, tailwindcss, postcss, autoprefixer |
@@ -570,7 +570,7 @@ function createWindow(): void {
     minHeight: 700,
     show: false,
     autoHideMenuBar: true,
-    title: "Agent Workspace",
+    title: "Space Mint",
     backgroundColor: "#1b1b1f",
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
@@ -592,7 +592,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId("com.agentworkspace.app");
+  electronApp.setAppUserModelId("com.spacemint.app");
 
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
@@ -1006,7 +1006,7 @@ export function TopBar({ project, onBack, onOpenSettings }: TopBarProps): React.
           </div>
         </>
       ) : (
-        <span className="text-sm font-semibold text-aw-text">Agent Workspace</span>
+        <span className="text-sm font-semibold text-aw-text">Space Mint</span>
       )}
     </div>
   );
@@ -1039,7 +1039,7 @@ export function ProjectHome(): React.JSX.Element {
   return (
     <div className="flex flex-1 items-center justify-center">
       <div className="text-center">
-        <h2 className="mb-2 text-lg font-semibold text-aw-text">Agent Workspace</h2>
+        <h2 className="mb-2 text-lg font-semibold text-aw-text">Space Mint</h2>
         <p className="mb-6 text-sm text-aw-text-soft">No project added yet.</p>
         <p className="text-xs text-aw-text-soft">
           Project management UI coming in Phase 1
@@ -1168,7 +1168,7 @@ Expected: Files deleted, không còn folder `components/` và `assets/`.
 
 - [ ] **Step 4: Cập nhật index.html title**
 
-Thay `<title>Electron</title>` thành `<title>Agent Workspace</title>`. Giữ nguyên phần còn lại (CSP, root div, script).
+Thay `<title>Electron</title>` thành `<title>Space Mint</title>`. Giữ nguyên phần còn lại (CSP, root div, script).
 
 - [ ] **Step 5: Verify**
 
@@ -1190,8 +1190,8 @@ pnpm dev
 
 Expected:
 - Electron window mở với dark background (#1b1b1f)
-- Top bar hiển thị "Agent Workspace"
-- Body hiển thị "Agent Workspace" + "No project added yet."
+- Top bar hiển thị "Space Mint"
+- Body hiển thị "Space Mint" + "No project added yet."
 - Không có console error trong DevTools (F12)
 
 - [ ] **Step 2: Verify IPC hoạt động**
@@ -1224,7 +1224,6 @@ Expected: Trả về object với default settings (fontSize 14, theme dark, ign
 - [ ] Zustand stores khởi tạo được.
 - [ ] Template electron-vite cũ đã dọn sạch.
 - [ ] Shared types compile và import được ở cả main lẫn renderer.
-
 
 
 

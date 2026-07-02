@@ -10,7 +10,7 @@
 
 **Tech Stack:** React 19, Zustand, Tailwind CSS, xterm.js.
 
-**Spec reference:** `docs/superpowers/specs/2026-01-07-agent-workspace-phase1-design.md` (Sections 9.5-9.7, 10, 12)
+**Spec reference:** `docs/superpowers/specs/2026-01-07-space-mint-phase1-design.md` (Sections 9.5-9.7, 10, 12)
 
 ---
 

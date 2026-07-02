@@ -507,7 +507,7 @@ Khi mở lại project, app có thể tự tạo terminal mới theo layout cũ,
 ## 11. Folder Structure Đề Xuất
 
 ```text
-agent-workspace/
+space-mint/
 ├── package.json
 ├── electron.vite.config.ts
 ├── tsconfig.json

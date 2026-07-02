@@ -10,7 +10,7 @@
 
 **Tech Stack:** React 19, Zustand, Tailwind CSS, nanoid (main side), electron-store.
 
-**Spec reference:** `docs/superpowers/specs/2026-01-07-agent-workspace-phase1-design.md` (Sections 9.1, 9.2, 11)
+**Spec reference:** `docs/superpowers/specs/2026-01-07-space-mint-phase1-design.md` (Sections 9.1, 9.2, 11)
 
 ---
 
@@ -251,7 +251,7 @@ export function ProjectHome(): React.JSX.Element {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-8">
       <div className="text-center">
-        <h2 className="mb-2 text-xl font-semibold text-aw-text">Agent Workspace</h2>
+        <h2 className="mb-2 text-xl font-semibold text-aw-text">Space Mint</h2>
         <p className="text-sm text-aw-text-soft">
           {projects.length === 0
             ? "No project added yet."
@@ -306,6 +306,5 @@ Add project → đóng app → rename folder → mở app → chọn project →
 - [ ] User remove project khỏi danh sách.
 - [ ] Project path missing hiển thị error.
 - [ ] Không có console error.
-
 
 

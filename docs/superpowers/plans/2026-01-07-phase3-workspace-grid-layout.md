@@ -10,7 +10,7 @@
 
 **Tech Stack:** react-grid-layout, Electron 39, Zustand.
 
-**Spec reference:** `docs/superpowers/specs/2026-01-07-agent-workspace-phase1-design.md` (Section 8)
+**Spec reference:** `docs/superpowers/specs/2026-01-07-space-mint-phase1-design.md` (Section 8)
 
 ---
 

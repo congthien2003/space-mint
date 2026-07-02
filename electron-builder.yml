@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: agent-workspace
+productName: space-mint
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: agent-workspace
+  executableName: space-mint
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
