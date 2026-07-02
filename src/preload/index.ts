@@ -21,7 +21,11 @@ const app = {
     readDirectory: (projectPath: string): Promise<FileTreeNode[]> =>
       ipcRenderer.invoke(IPC.FILE_READ_DIRECTORY, projectPath),
     readChildren: (folderPath: string): Promise<FileTreeNode[]> =>
-      ipcRenderer.invoke(IPC.FILE_READ_CHILDREN, folderPath)
+      ipcRenderer.invoke(IPC.FILE_READ_CHILDREN, folderPath),
+    readTextFile: (
+      filePath: string
+    ): Promise<{ content: string; size: number }> =>
+      ipcRenderer.invoke(IPC.FILE_READ_TEXT, filePath)
   },
 
   terminals: {

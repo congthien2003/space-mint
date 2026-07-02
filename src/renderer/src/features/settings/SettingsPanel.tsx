@@ -32,9 +32,9 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
   };
 
   const labelClass =
-    "mb-1.5 block text-[11px] font-semibold uppercase text-aw-text-soft";
+    "mb-1 block text-[11px] font-semibold uppercase text-aw-text-soft";
   const inputClass =
-    "w-full rounded-md border border-aw-border bg-aw-bg px-3 py-2 text-sm text-aw-text outline-none focus:border-aw-border-strong";
+    "w-full rounded-md border border-aw-border bg-aw-bg px-2.5 py-1.5 text-sm text-aw-text outline-none focus:border-aw-border-strong";
 
   return (
     <div
@@ -42,10 +42,10 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
       onClick={onClose}
     >
       <div
-        className="max-h-[82vh] w-full max-w-[520px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-6"
+        className="max-h-[82vh] w-full max-w-[480px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-4"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-6 border-b border-aw-border pb-4">
+        <div className="mb-4 border-b border-aw-border pb-3">
           <p className="text-[11px] font-semibold uppercase text-aw-text-soft">
             Workspace
           </p>
@@ -100,13 +100,13 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
 
         <div className="flex justify-end gap-2">
           <button
-            className="h-10 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
+            className="h-8 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className="h-10 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active"
+            className="h-8 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active"
             onClick={() => void save()}
           >
             Save

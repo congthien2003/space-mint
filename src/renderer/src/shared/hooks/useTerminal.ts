@@ -36,9 +36,7 @@ function themeFor(theme: "dark" | "light"): ITheme {
  * - Bridges input (xterm -> PTY) and output (PTY -> xterm) over IPC.
  * - Keeps PTY cols/rows in sync with the rendered size via ResizeObserver.
  */
-export function useTerminal(
-  opts: UseTerminalOptions
-): {
+export function useTerminal(opts: UseTerminalOptions): {
   containerRef: React.RefObject<HTMLDivElement | null>;
 } {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -56,7 +54,7 @@ export function useTerminal(
     const terminal = new Terminal({
       fontSize: optsRef.current.fontSize,
       fontFamily:
-        "ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace",
+        '"Cascadia Code", "HasklugNerdFont", ui-monospace, Consolas, monospace',
       theme: themeFor(optsRef.current.theme),
       cursorBlink: true,
       allowProposedApi: true

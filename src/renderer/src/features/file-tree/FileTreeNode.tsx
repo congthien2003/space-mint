@@ -7,12 +7,14 @@ interface Props {
   node: NodeType;
   depth: number;
   onOpenTerminal: (folderPath: string) => void;
+  onPreviewFile: (file: NodeType) => void;
 }
 
 export function FileTreeNode({
   node,
   depth,
-  onOpenTerminal
+  onOpenTerminal,
+  onPreviewFile
 }: Props): React.JSX.Element {
   const isExpanded = useFileTreeStore((s) => s.isExpanded(node.path));
   const children = useFileTreeStore((s) => s.childrenMap[node.path]);
@@ -22,7 +24,11 @@ export function FileTreeNode({
   const isDir = node.type === "directory";
 
   const handleClick = (): void => {
-    if (isDir) void toggleExpand(node.path);
+    if (isDir) {
+      void toggleExpand(node.path);
+      return;
+    }
+    onPreviewFile(node);
   };
 
   const handleContextMenu = (e: React.MouseEvent): void => {
@@ -37,7 +43,7 @@ export function FileTreeNode({
     <div>
       <div
         className={clsx(
-          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[4px] text-xs leading-4 hover:bg-aw-bg-mute",
+          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[3px] text-xs leading-4 hover:bg-aw-bg-mute",
           isDir ? "font-medium text-aw-text" : "text-aw-text-soft"
         )}
         style={{ paddingLeft: depth * 12 + 4 }}
@@ -59,6 +65,7 @@ export function FileTreeNode({
               node={child}
               depth={depth + 1}
               onOpenTerminal={onOpenTerminal}
+              onPreviewFile={onPreviewFile}
             />
           ))}
         </div>

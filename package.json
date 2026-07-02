@@ -29,6 +29,8 @@
     "clsx": "^2.1.1",
     "electron-store": "^11.0.2",
     "electron-updater": "^6.3.9",
+    "lucide": "^1.23.0",
+    "lucide-react": "^1.23.0",
     "nanoid": "^5.1.16",
     "node-pty": "^1.1.0",
     "react-grid-layout": "^2.2.3",
