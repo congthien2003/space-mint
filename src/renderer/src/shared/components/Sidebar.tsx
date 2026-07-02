@@ -1,3 +1,4 @@
+import { ChevronLeft } from "lucide-react";
 import { useWorkspaceStore } from "@renderer/stores/workspace.store";
 import { FileTree } from "@renderer/features/file-tree/FileTree";
 
@@ -21,20 +22,7 @@ export function Sidebar({ onToggle }: SidebarProps): React.JSX.Element {
           aria-label="Hide file sidebar"
           onClick={onToggle}
         >
-          <svg
-            className="h-3.5 w-3.5"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M10 4 6 8l4 4"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronLeft size={14} aria-hidden="true" />
         </button>
       </div>
       <div className="flex-1 overflow-y-auto px-1.5 py-1.5 text-sm text-aw-text-soft">

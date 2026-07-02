@@ -36,9 +36,7 @@ function themeFor(theme: "dark" | "light"): ITheme {
  * - Bridges input (xterm -> PTY) and output (PTY -> xterm) over IPC.
  * - Keeps PTY cols/rows in sync with the rendered size via ResizeObserver.
  */
-export function useTerminal(
-  opts: UseTerminalOptions
-): {
+export function useTerminal(opts: UseTerminalOptions): {
   containerRef: React.RefObject<HTMLDivElement | null>;
 } {
   const containerRef = useRef<HTMLDivElement | null>(null);

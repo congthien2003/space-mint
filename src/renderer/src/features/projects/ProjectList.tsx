@@ -1,15 +1,16 @@
 import type { Project } from "@shared/types";
-import { useWorkspaceStore } from "@renderer/stores/workspace.store";
-import { useProjectsStore } from "@renderer/stores/projects.store";
 
 interface Props {
   projects: Project[];
+  onOpenProject: (project: Project) => void;
+  onRequestRemove: (project: Project) => void;
 }
 
-export function ProjectList({ projects }: Props): React.JSX.Element {
-  const openProject = useWorkspaceStore((s) => s.openProject);
-  const removeProject = useProjectsStore((s) => s.removeProject);
-
+export function ProjectList({
+  projects,
+  onOpenProject,
+  onRequestRemove
+}: Props): React.JSX.Element {
   return (
     <div className="flex flex-col gap-1.5">
       <p className="text-[11px] font-semibold uppercase text-aw-text-soft">
@@ -21,8 +22,9 @@ export function ProjectList({ projects }: Props): React.JSX.Element {
           className="group flex items-center gap-3 rounded-lg border border-aw-border bg-aw-bg-soft px-3 py-2 hover:border-aw-border-strong"
         >
           <button
+            type="button"
             className="flex min-w-0 flex-1 flex-col items-start text-left"
-            onClick={() => void openProject(project)}
+            onClick={() => onOpenProject(project)}
           >
             <span className="text-sm font-semibold leading-5 text-aw-text">
               {project.name}
@@ -35,9 +37,10 @@ export function ProjectList({ projects }: Props): React.JSX.Element {
             </span>
           </button>
           <button
+            type="button"
             className="rounded-md px-2 py-1 text-xs font-medium text-aw-text-muted opacity-0 hover:bg-aw-bg-mute hover:text-aw-error group-hover:opacity-100"
             title="Remove from list"
-            onClick={() => void removeProject(project.id)}
+            onClick={() => onRequestRemove(project)}
           >
             ✕
           </button>

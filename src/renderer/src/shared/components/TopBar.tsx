@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { ArrowLeft, PanelLeft, PanelRight, Plus, Settings } from "lucide-react";
 import type { Project } from "@shared/types";
 
 interface TopBarProps {
@@ -30,17 +31,18 @@ export function TopBar({
       {project ? (
         <>
           <button
-            className="rounded-md border border-aw-border-strong bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text hover:bg-aw-bg-mute"
+            className="inline-flex items-center gap-1.5 rounded-md border border-aw-border-strong bg-aw-bg-soft px-2.5 py-1 text-xs font-medium text-aw-text hover:bg-aw-bg-mute"
             onClick={onBack}
           >
-            ← Projects
+            <ArrowLeft size={14} aria-hidden="true" />
+            <span>Projects</span>
           </button>
           <div className="min-w-0 flex-1">
-            <span className="block truncate text-base font-semibold leading-5 text-aw-text">
+            <span className="block truncate text-base font-mono font-medium leading-5 text-aw-text">
               {project.name}
             </span>
             <span
-              className="block truncate font-mono text-[11px] leading-4 text-aw-text-soft"
+              className="block truncate font-mono text-[10px] leading-4 text-aw-text-soft"
               title={project.path}
             >
               {project.path}
@@ -59,28 +61,7 @@ export function TopBar({
               aria-label="Toggle file sidebar"
               onClick={onToggleLeftSidebar}
             >
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect
-                  x="2.5"
-                  y="3"
-                  width="11"
-                  height="10"
-                  rx="1.5"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                />
-                <path
-                  d="M6 3v10"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <PanelLeft size={14} aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -94,43 +75,21 @@ export function TopBar({
               aria-label="Toggle preview sidebar"
               onClick={onToggleRightPreview}
             >
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect
-                  x="2.5"
-                  y="3"
-                  width="11"
-                  height="10"
-                  rx="1.5"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                />
-                <path
-                  d="M10 3v10"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <PanelRight size={14} aria-hidden="true" />
             </button>
             <button
-              className={clsx(
-                "h-7 rounded-md px-3 text-xs font-medium",
-                "bg-aw-accent text-white hover:bg-aw-accent-active"
-              )}
+              className="inline-flex h-7 items-center gap-1.5 rounded-md bg-aw-accent px-3 text-xs font-medium text-white hover:bg-aw-accent-active"
               onClick={onAddTerminal}
             >
-              + Terminal
+              <Plus size={14} aria-hidden="true" />
+              <span>Terminal</span>
             </button>
             <button
-              className="h-7 rounded-md border border-aw-border bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
+              className="inline-flex h-7 items-center gap-1.5 rounded-md border border-aw-border bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
               onClick={onOpenSettings}
             >
-              Settings
+              <Settings size={14} aria-hidden="true" />
+              <span>Settings</span>
             </button>
           </div>
         </>
