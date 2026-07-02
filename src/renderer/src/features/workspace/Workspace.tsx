@@ -35,7 +35,7 @@ export function Workspace({
         <div className="flex min-h-0 w-full max-w-[1280px] flex-1 flex-col">
           {panes.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-4">
-              <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-10 py-9 text-center">
+              <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-6 py-8 text-center">
                 <p className="text-base font-medium text-aw-text">
                   No terminals yet.
                 </p>
@@ -45,7 +45,7 @@ export function Workspace({
                 </p>
               </div>
               <button
-                className="h-10 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active"
+                className="h-7 rounded-md bg-aw-accent px-3 text-xs font-medium text-white hover:bg-aw-accent-active"
                 onClick={() =>
                   void addPane({
                     cwd: currentProject?.path ?? "",
