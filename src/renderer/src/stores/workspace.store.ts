@@ -50,6 +50,7 @@ interface WorkspaceState {
   panes: TerminalPane[];
   layoutTree: LayoutNode | null;
   exitedPanes: Record<string, number>;
+  focusedPaneId: string | null;
   openProject: (project: Project) => Promise<void>;
   closeProject: () => Promise<void>;
   addPane: (opts: AddPaneOptions) => Promise<void>;
@@ -60,6 +61,7 @@ interface WorkspaceState {
   resizeSplit: (splitId: string, sizes: number[]) => void;
   markExited: (id: string, exitCode: number) => void;
   restartPane: (id: string) => Promise<void>;
+  setFocusedPane: (id: string | null) => void;
   saveLayout: () => Promise<void>;
 }
 
@@ -98,6 +100,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   panes: [],
   layoutTree: null,
   exitedPanes: {},
+  focusedPaneId: null,
 
   openProject: async (project) => {
     await killAllPanes(get().panes);
@@ -132,7 +135,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   closeProject: async () => {
     await killAllPanes(get().panes);
-    set({ currentProject: null, panes: [], layoutTree: null, exitedPanes: {} });
+    set({ currentProject: null, panes: [], layoutTree: null, exitedPanes: {}, focusedPaneId: null });
   },
 
   addPane: async (opts) => {
@@ -223,7 +226,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       return {
         panes: state.panes.filter((p) => p.id !== id),
         layoutTree: removePaneFromTree(state.layoutTree, id),
-        exitedPanes
+        exitedPanes,
+        focusedPaneId: state.focusedPaneId === id ? null : state.focusedPaneId
       };
     });
     scheduleSave(() => void get().saveLayout());
@@ -308,5 +312,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     } catch {
       // ignore persistence errors
     }
+  },
+
+  setFocusedPane: (id) => {
+    set({ focusedPaneId: id });
   }
 }));

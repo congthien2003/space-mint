@@ -36,6 +36,185 @@
   }
 }
 
+@keyframes aw-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aw-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aw-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aw-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aw-soft-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.82);
+    opacity: 0.62;
+  }
+}
+
+@keyframes aw-focus-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aw-focus-backdrop-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes aw-focus-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aw-focus-panel-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
+}
+
+.aw-action {
+  transform: translateY(0) scale(1);
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+.aw-action:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.aw-action:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.aw-lift {
+  transform: translateY(0);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.aw-lift:hover {
+  box-shadow: 0 10px 24px rgba(38, 37, 30, 0.08);
+  transform: translateY(-1px);
+}
+
+.aw-fade-in {
+  animation: aw-fade-up 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.aw-popover-in {
+  animation: aw-popover-in 140ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top right;
+}
+
+.aw-dialog-backdrop {
+  animation: aw-backdrop-in 160ms ease both;
+}
+
+.aw-dialog-panel {
+  animation: aw-dialog-in 190ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.aw-soft-pulse {
+  animation: aw-soft-pulse 2.6s ease-in-out infinite;
+}
+
+.aw-focus-backdrop-in {
+  animation: aw-focus-backdrop-in 200ms ease both;
+}
+
+.aw-focus-backdrop-out {
+  animation: aw-focus-backdrop-out 180ms ease both;
+}
+
+.aw-focus-panel-in {
+  animation: aw-focus-panel-in 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.aw-focus-panel-out {
+  animation: aw-focus-panel-out 240ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.workspace-side-panel {
+  transition:
+    opacity 200ms ease,
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    width 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .xterm .xterm-viewport {
   overflow-y: auto;
 }
@@ -43,12 +222,16 @@
 .workspace-split > .workspace-split-controls {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
+  transform: translateY(2px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 
 .workspace-split:hover > .workspace-split-controls {
   opacity: 1;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .workspace-split-add {
@@ -64,11 +247,22 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
 }
 
 .workspace-split-add:hover {
   border-color: rgba(150, 146, 132, 0.66);
   color: #26251e;
+  transform: translateY(-1px) scale(1.03);
+}
+
+.workspace-split-add:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .workspace-split-add-left {
@@ -83,8 +277,37 @@
   transform: translateY(-50%);
 }
 
+.workspace-split-add-left:hover,
+.workspace-split-add-right:hover {
+  transform: translateY(-50%) translateY(-1px) scale(1.03);
+}
+
+.workspace-split-add-left:active,
+.workspace-split-add-right:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
 .workspace-split-add-bottom {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.workspace-split-add-bottom:hover {
+  transform: translateX(-50%) translateY(-1px) scale(1.03);
+}
+
+.workspace-split-add-bottom:active {
+  transform: translateX(-50%) translateY(0) scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

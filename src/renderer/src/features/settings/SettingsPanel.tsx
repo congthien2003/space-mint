@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { AppSettings } from "@shared/types";
+import type { AppSettings, TerminalThemeName } from "@shared/types";
+import { TERMINAL_THEME_OPTIONS } from "@shared/types";
 import { useSettingsStore } from "@renderer/stores/settings.store";
 
 interface Props {
@@ -38,11 +39,11 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-aw-text/30 px-4"
+      className="aw-dialog-backdrop fixed inset-0 z-50 flex items-center justify-center bg-aw-text/30 px-4"
       onClick={onClose}
     >
       <div
-        className="max-h-[82vh] w-full max-w-[480px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-4"
+        className="aw-dialog-panel max-h-[82vh] w-full max-w-[480px] overflow-y-auto rounded-lg border border-aw-border bg-aw-bg-soft p-4 shadow-lg shadow-aw-text/10"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 border-b border-aw-border pb-3">
@@ -82,10 +83,13 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
         <select
           className={`${inputClass} mb-4 w-44`}
           value={theme}
-          onChange={(e) => setTheme(e.target.value as "dark" | "light")}
+          onChange={(e) => setTheme(e.target.value as TerminalThemeName)}
         >
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
+          {TERMINAL_THEME_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
 
         <label className={labelClass}>
@@ -100,13 +104,13 @@ export function SettingsPanel({ onClose }: Props): React.JSX.Element {
 
         <div className="flex justify-end gap-2">
           <button
-            className="h-8 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
+            className="aw-action h-8 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className="h-8 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active"
+            className="aw-action h-8 rounded-md bg-aw-accent px-4 text-sm font-medium text-white shadow-[0_6px_18px_rgba(229,57,53,0.16)] hover:bg-aw-accent-active"
             onClick={() => void save()}
           >
             Save

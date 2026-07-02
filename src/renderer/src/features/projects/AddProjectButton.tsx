@@ -19,7 +19,7 @@ export function AddProjectButton(): React.JSX.Element {
 
   return (
     <button
-      className="h-10 rounded-md bg-aw-accent px-4 text-sm font-medium text-white hover:bg-aw-accent-active disabled:cursor-not-allowed disabled:opacity-50"
+      className="aw-action h-10 rounded-md bg-aw-accent px-4 text-sm font-medium text-white shadow-[0_8px_22px_rgba(229,57,53,0.18)] hover:bg-aw-accent-active disabled:cursor-not-allowed disabled:opacity-50"
       onClick={onClick}
       disabled={busy}
     >

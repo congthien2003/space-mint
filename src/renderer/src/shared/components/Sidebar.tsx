@@ -17,7 +17,7 @@ export function Sidebar({ onToggle }: SidebarProps): React.JSX.Element {
         </span>
         <button
           type="button"
-          className="flex h-6 w-6 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft transition hover:border-aw-border-strong hover:text-aw-text"
+          className="aw-action flex h-6 w-6 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
           title="Hide file sidebar"
           aria-label="Hide file sidebar"
           onClick={onToggle}
@@ -29,7 +29,7 @@ export function Sidebar({ onToggle }: SidebarProps): React.JSX.Element {
         {currentProject ? (
           <FileTree projectPath={currentProject.path} />
         ) : (
-          <div className="m-2 rounded-lg border border-aw-border bg-aw-bg px-3 py-4 text-center text-xs text-aw-text-soft">
+          <div className="aw-fade-in m-2 rounded-lg border border-aw-border bg-aw-bg px-3 py-4 text-center text-xs text-aw-text-soft">
             No project open.
           </div>
         )}

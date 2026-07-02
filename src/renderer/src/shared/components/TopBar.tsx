@@ -31,7 +31,7 @@ export function TopBar({
   onToggleRightPreview
 }: TopBarProps): React.JSX.Element {
   const toggleButtonClass =
-    "flex h-7 w-7 items-center justify-center rounded-md border text-xs font-medium transition";
+    "aw-action flex h-7 w-7 items-center justify-center rounded-md border text-xs font-medium";
   const pathSegments = project ? getPathSegments(project.path) : [];
 
   return (
@@ -39,7 +39,7 @@ export function TopBar({
       {project ? (
         <>
           <button
-            className="inline-flex items-center gap-1.5 rounded-md border border-aw-border-strong bg-aw-bg-soft px-2.5 py-1 text-xs font-medium text-aw-text hover:bg-aw-bg-mute"
+            className="aw-action inline-flex items-center gap-1.5 rounded-md border border-aw-border-strong bg-aw-bg-soft px-2.5 py-1 text-xs font-medium text-aw-text hover:bg-aw-bg-mute"
             onClick={onBack}
           >
             <ArrowLeft size={14} aria-hidden="true" />
@@ -106,14 +106,14 @@ export function TopBar({
               <PanelRight size={14} aria-hidden="true" />
             </button>
             <button
-              className="inline-flex h-7 items-center gap-1.5 rounded-md bg-aw-accent px-3 text-xs font-medium text-white hover:bg-aw-accent-active"
+              className="aw-action inline-flex h-7 items-center gap-1.5 rounded-md bg-aw-accent px-3 text-xs font-medium text-white shadow-[0_6px_18px_rgba(229,57,53,0.18)] hover:bg-aw-accent-active"
               onClick={onAddTerminal}
             >
               <Plus size={14} aria-hidden="true" />
               <span>Terminal</span>
             </button>
             <button
-              className="inline-flex h-7 items-center gap-1.5 rounded-md border border-aw-border bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
+              className="aw-action inline-flex h-7 items-center gap-1.5 rounded-md border border-aw-border bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
               onClick={onOpenSettings}
             >
               <Settings size={14} aria-hidden="true" />
@@ -122,8 +122,8 @@ export function TopBar({
           </div>
         </>
       ) : (
-        <div className="flex items-center gap-3">
-          <span className="h-3 w-3 rounded-sm bg-aw-accent" />
+        <div className="aw-fade-in flex items-center gap-3">
+          <span className="h-3 w-3 rounded-sm bg-aw-accent shadow-[0_0_0_4px_rgba(229,57,53,0.10)]" />
           <span className="text-sm font-semibold text-aw-text">Space Mint</span>
         </div>
       )}

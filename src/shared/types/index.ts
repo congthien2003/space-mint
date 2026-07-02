@@ -8,6 +8,11 @@ export type {
   LayoutSplitNode,
   WorkspaceLayout
 } from "./layout";
-export type { AppSettings } from "./settings";
-export { DEFAULT_SETTINGS } from "./settings";
+export type { AppSettings, TerminalThemeName } from "./settings";
+export {
+  DEFAULT_SETTINGS,
+  TERMINAL_THEME_OPTIONS,
+  isDarkTerminalTheme,
+  isTerminalThemeName
+} from "./settings";
 export { IPC } from "./ipc";

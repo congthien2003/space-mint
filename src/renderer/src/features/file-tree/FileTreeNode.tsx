@@ -43,7 +43,7 @@ export function FileTreeNode({
     <div>
       <div
         className={clsx(
-          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[3px] text-xs leading-4 hover:bg-aw-bg-mute",
+          "flex cursor-pointer items-center gap-1 rounded-md px-1 py-[3px] text-xs leading-4 transition hover:bg-aw-bg-mute active:translate-y-px",
           isDir ? "font-medium text-aw-text" : "text-aw-text-soft"
         )}
         style={{ paddingLeft: depth * 12 + 4 }}
@@ -58,7 +58,7 @@ export function FileTreeNode({
       </div>
 
       {isDir && isExpanded && children && (
-        <div>
+        <div className="aw-fade-in">
           {children.map((child) => (
             <FileTreeNode
               key={child.path}
@@ -82,12 +82,12 @@ export function FileTreeNode({
             }}
           />
           <div
-            className="fixed z-50 min-w-[180px] rounded-md border border-aw-border-strong bg-aw-bg-soft py-1 text-xs text-aw-text"
+            className="aw-popover-in fixed z-50 min-w-[180px] rounded-md border border-aw-border-strong bg-aw-bg-soft py-1 text-xs text-aw-text shadow-lg shadow-aw-text/10"
             style={{ left: menu.x, top: menu.y }}
           >
             {isDir && (
               <button
-                className="block w-full px-3 py-1.5 text-left hover:bg-aw-bg-mute"
+                className="block w-full px-3 py-1.5 text-left transition hover:bg-aw-bg-mute active:translate-y-px"
                 onClick={() => {
                   onOpenTerminal(node.path);
                   closeMenu();
@@ -97,7 +97,7 @@ export function FileTreeNode({
               </button>
             )}
             <button
-              className="block w-full px-3 py-1.5 text-left hover:bg-aw-bg-mute"
+              className="block w-full px-3 py-1.5 text-left transition hover:bg-aw-bg-mute active:translate-y-px"
               onClick={() => {
                 void navigator.clipboard?.writeText(node.path);
                 closeMenu();

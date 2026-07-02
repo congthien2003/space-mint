@@ -19,7 +19,7 @@ export function ProjectList({
       {projects.map((project) => (
         <div
           key={project.id}
-          className="group flex items-center gap-3 rounded-lg border border-aw-border bg-aw-bg-soft px-3 py-2 hover:border-aw-border-strong"
+          className="aw-lift group flex items-center gap-3 rounded-lg border border-aw-border bg-aw-bg-soft px-3 py-2 hover:border-aw-border-strong"
         >
           <button
             type="button"
@@ -38,7 +38,7 @@ export function ProjectList({
           </button>
           <button
             type="button"
-            className="rounded-md px-2 py-1 text-xs font-medium text-aw-text-muted opacity-0 hover:bg-aw-bg-mute hover:text-aw-error group-hover:opacity-100"
+            className="aw-action rounded-md px-2 py-1 text-xs font-medium text-aw-text-muted opacity-0 hover:bg-aw-bg-mute hover:text-aw-error group-hover:opacity-100"
             title="Remove from list"
             onClick={() => onRequestRemove(project)}
           >

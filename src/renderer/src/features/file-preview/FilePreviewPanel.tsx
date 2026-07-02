@@ -29,7 +29,7 @@ export function FilePreviewPanel({
           </p>
           <button
             type="button"
-            className="flex h-6 w-6 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft transition hover:border-aw-border-strong hover:text-aw-text"
+            className="aw-action flex h-6 w-6 items-center justify-center rounded-md border border-aw-border bg-aw-bg text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
             title="Hide preview sidebar"
             aria-label="Hide preview sidebar"
             onClick={onToggle}
@@ -72,22 +72,24 @@ export function FilePreviewPanel({
       <div className="min-h-0 flex-1 overflow-hidden">
         {!selectedFile ? (
           <div className="flex h-full items-center justify-center px-6 text-center">
-            <p className="rounded-lg border border-aw-border bg-aw-bg px-3 py-6 text-sm leading-6 text-aw-text-soft">
+            <p className="aw-fade-in rounded-lg border border-aw-border bg-aw-bg px-3 py-6 text-sm leading-6 text-aw-text-soft">
               Select a file to preview.
             </p>
           </div>
         ) : loading ? (
           <div className="flex h-full items-center justify-center px-8 text-center">
-            <p className="text-sm text-aw-text-soft">Loading preview...</p>
+            <p className="aw-fade-in text-sm text-aw-text-soft">
+              Loading preview...
+            </p>
           </div>
         ) : error ? (
           <div className="px-4 py-5">
-            <p className="rounded-md border border-aw-border bg-aw-bg px-3 py-2 text-xs leading-5 text-aw-error">
+            <p className="aw-fade-in rounded-md border border-aw-border bg-aw-bg px-3 py-2 text-xs leading-5 text-aw-error">
               {error}
             </p>
           </div>
         ) : (
-          <pre className="h-full overflow-auto whitespace-pre-wrap break-words bg-aw-bg px-3 py-2 font-mono text-[12px] leading-5 text-aw-text">
+          <pre className="aw-fade-in h-full overflow-auto whitespace-pre-wrap break-words bg-aw-bg px-3 py-2 font-mono text-[12px] leading-5 text-aw-text">
             {content || " "}
           </pre>
         )}

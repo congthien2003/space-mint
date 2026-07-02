@@ -38,13 +38,13 @@ export function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-aw-text/30 px-4"
+      className="aw-dialog-backdrop fixed inset-0 z-50 flex items-center justify-center bg-aw-text/30 px-4"
       onClick={() => {
         if (!submitting) onClose();
       }}
     >
       <div
-        className="w-full max-w-[420px] rounded-lg border border-aw-border bg-aw-bg-soft p-4 shadow-lg shadow-aw-text/10"
+        className="aw-dialog-panel w-full max-w-[420px] rounded-lg border border-aw-border bg-aw-bg-soft p-4 shadow-lg shadow-aw-text/10"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="border-b border-aw-border pb-3">
@@ -60,7 +60,7 @@ export function ConfirmDialog({
         <div className="mt-4 flex justify-end gap-2">
           <button
             type="button"
-            className="h-8 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft transition hover:border-aw-border-strong hover:text-aw-text disabled:cursor-not-allowed disabled:opacity-50"
+            className="aw-action h-8 rounded-md border border-aw-border bg-aw-bg-soft px-4 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text disabled:cursor-not-allowed disabled:opacity-50"
             disabled={submitting}
             onClick={onClose}
           >
@@ -70,6 +70,7 @@ export function ConfirmDialog({
             type="button"
             className={clsx(
               "h-8 rounded-md px-4 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-50",
+              "aw-action",
               intent === "danger"
                 ? "bg-aw-error hover:bg-aw-error/90"
                 : "bg-aw-accent hover:bg-aw-accent-active"

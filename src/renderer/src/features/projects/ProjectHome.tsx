@@ -43,15 +43,17 @@ export function ProjectHome(): React.JSX.Element {
           </div>
 
           {error && (
-            <p className="rounded-md border border-aw-error/30 bg-aw-error/10 px-3 py-2 text-sm text-aw-error">
+            <p className="aw-fade-in rounded-md border border-aw-error/30 bg-aw-error/10 px-3 py-2 text-sm text-aw-error">
               {error}
             </p>
           )}
 
           {loading ? (
-            <p className="text-sm text-aw-text-soft">Loading projects...</p>
+            <p className="aw-fade-in text-sm text-aw-text-soft">
+              Loading projects...
+            </p>
           ) : projects.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-6 py-10 text-center">
+            <div className="aw-fade-in rounded-lg border border-dashed border-aw-border-strong bg-aw-bg-soft px-6 py-10 text-center">
               <p className="text-base font-medium text-aw-text">
                 No project added yet.
               </p>

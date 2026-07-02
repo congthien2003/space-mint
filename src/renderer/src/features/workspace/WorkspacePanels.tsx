@@ -16,6 +16,7 @@ const DIVIDER_PX = 8;
 interface NodeViewProps {
   node: LayoutNode;
   panesById: Map<string, TerminalPaneType>;
+  focusedPaneId: string | null;
   onResizeSplit: (splitId: string, sizes: number[]) => void;
   onAddToNode: (
     node: LayoutNode,
@@ -28,6 +29,7 @@ interface NodeViewProps {
 function SplitNodeView({
   node,
   panesById,
+  focusedPaneId,
   onResizeSplit,
   onAddToNode
 }: NodeViewProps & { node: LayoutSplitNode }): React.JSX.Element {
@@ -133,6 +135,7 @@ function SplitNodeView({
             <LayoutNodeView
               node={child}
               panesById={panesById}
+              focusedPaneId={focusedPaneId}
               onResizeSplit={onResizeSplit}
               onAddToNode={onAddToNode}
             />
@@ -147,7 +150,7 @@ function SplitNodeView({
             >
               <div
                 className={clsx(
-                  "rounded-full bg-aw-border-strong opacity-0 transition group-hover:opacity-100",
+                  "rounded-full bg-aw-border-strong opacity-0 transition group-hover:scale-110 group-hover:opacity-100",
                   isRow ? "h-10 w-px" : "h-px w-10"
                 )}
               />
@@ -162,6 +165,7 @@ function SplitNodeView({
 function LayoutNodeView({
   node,
   panesById,
+  focusedPaneId,
   onResizeSplit,
   onAddToNode
 }: NodeViewProps): React.JSX.Element | null {
@@ -169,7 +173,12 @@ function LayoutNodeView({
     const pane = panesById.get(node.paneId);
     if (!pane) return null;
     return (
-      <div className="h-full w-full min-h-0 min-w-0 overflow-hidden">
+      <div
+        className={clsx(
+          "h-full w-full min-h-0 min-w-0 overflow-hidden",
+          focusedPaneId !== pane.id && "aw-fade-in"
+        )}
+      >
         <TerminalPane pane={pane} />
       </div>
     );
@@ -179,6 +188,7 @@ function LayoutNodeView({
     <SplitNodeView
       node={node}
       panesById={panesById}
+      focusedPaneId={focusedPaneId}
       onResizeSplit={onResizeSplit}
       onAddToNode={onAddToNode}
     />
@@ -190,6 +200,7 @@ export function WorkspacePanels(): React.JSX.Element | null {
   const layoutTree = useWorkspaceStore((s) => s.layoutTree);
   const resizeSplit = useWorkspaceStore((s) => s.resizeSplit);
   const addPaneToNode = useWorkspaceStore((s) => s.addPaneToNode);
+  const focusedPaneId = useWorkspaceStore((s) => s.focusedPaneId);
 
   const panesById = useMemo(
     () => new Map(panes.map((pane) => [pane.id, pane])),
@@ -203,6 +214,7 @@ export function WorkspacePanels(): React.JSX.Element | null {
       <LayoutNodeView
         node={layoutTree}
         panesById={panesById}
+        focusedPaneId={focusedPaneId}
         onResizeSplit={resizeSplit}
         onAddToNode={(node, direction, placement, sourcePane) =>
           void addPaneToNode({
