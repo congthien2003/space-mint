@@ -23,14 +23,14 @@ export function TopBar({
   onToggleRightPreview
 }: TopBarProps): React.JSX.Element {
   const toggleButtonClass =
-    "flex h-10 w-10 items-center justify-center rounded-md border text-sm font-medium transition";
+    "flex h-7 w-7 items-center justify-center rounded-md border text-xs font-medium transition";
 
   return (
-    <div className="flex h-16 items-center gap-4 border-b border-aw-border bg-aw-bg px-5">
+    <div className="flex h-12 items-center gap-3 border-b border-aw-border bg-aw-bg px-3">
       {project ? (
         <>
           <button
-            className="rounded-md border border-aw-border-strong bg-aw-bg-soft px-3 py-2 text-sm font-medium text-aw-text hover:bg-aw-bg-mute"
+            className="rounded-md border border-aw-border-strong bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text hover:bg-aw-bg-mute"
             onClick={onBack}
           >
             ← Projects
@@ -119,7 +119,7 @@ export function TopBar({
             </button>
             <button
               className={clsx(
-                "h-10 rounded-md px-4 text-sm font-medium",
+                "h-7 rounded-md px-3 text-xs font-medium",
                 "bg-aw-accent text-white hover:bg-aw-accent-active"
               )}
               onClick={onAddTerminal}
@@ -127,7 +127,7 @@ export function TopBar({
               + Terminal
             </button>
             <button
-              className="h-10 rounded-md border border-aw-border bg-aw-bg-soft px-3 text-sm font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
+              className="h-7 rounded-md border border-aw-border bg-aw-bg-soft px-2.5 text-xs font-medium text-aw-text-soft hover:border-aw-border-strong hover:text-aw-text"
               onClick={onOpenSettings}
             >
               Settings
