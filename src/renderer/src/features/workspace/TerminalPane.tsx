@@ -104,7 +104,7 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
         className={clsx(
           "flex h-full w-full flex-col overflow-hidden rounded-lg border border-aw-border bg-aw-bg-soft",
           isFocused &&
-            "fixed inset-x-6 bottom-6 top-14 z-50 border-aw-border-strong shadow-2xl shadow-aw-text/20 w-[90%] h-[90%] m-auto"
+            "fixed inset-x-6 bottom-0 top-0 z-50 border-aw-border-strong shadow-2xl shadow-aw-text/20 w-[80%] h-[80%] m-auto"
         )}
       >
         <div

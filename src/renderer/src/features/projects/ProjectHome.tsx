@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Project } from "@shared/types";
 import { ConfirmDialog } from "@renderer/shared/components/ConfirmDialog";
+import { AppBrand } from "@renderer/shared/components/AppBrand";
 import { useProjectsStore } from "@renderer/stores/projects.store";
 import { useWorkspaceStore } from "@renderer/stores/workspace.store";
 import { AddProjectButton } from "./AddProjectButton";
@@ -27,17 +28,18 @@ export function ProjectHome(): React.JSX.Element {
       <div className="flex flex-1 overflow-y-auto bg-aw-bg">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-6">
           <div className="flex items-start justify-between gap-4 border-b border-aw-border pb-4">
-            <div>
+            <div className="min-w-0">
               <p className="mb-2 text-[11px] font-semibold uppercase text-aw-text-soft">
                 Local workspaces
               </p>
-              <h2 className="text-2xl font-normal leading-tight text-aw-text">
-                Space Mint
-              </h2>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-aw-text-soft">
-                Open a project, browse its files, and arrange real terminal
-                sessions in a saved workspace.
-              </p>
+              <AppBrand
+                className="items-start gap-3.5"
+                iconClassName="h-12 w-12 rounded-[18px]"
+                titleClassName="text-2xl font-normal leading-tight"
+                titleTag="h2"
+                subtitle="Open a project, browse its files, and arrange real terminal sessions in a saved workspace."
+                subtitleClassName="max-w-xl"
+              />
             </div>
             <AddProjectButton />
           </div>

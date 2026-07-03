@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { ArrowLeft, PanelLeft, PanelRight, Plus, Settings } from "lucide-react";
 import type { Project } from "@shared/types";
+import { AppBrand } from "./AppBrand";
 
 interface TopBarProps {
   project: Project | null;
@@ -122,10 +123,12 @@ export function TopBar({
           </div>
         </>
       ) : (
-        <div className="aw-fade-in flex items-center gap-3">
-          <span className="h-3 w-3 rounded-sm bg-aw-accent shadow-[0_0_0_4px_rgba(229,57,53,0.10)]" />
-          <span className="text-sm font-semibold text-aw-text">Space Mint</span>
-        </div>
+        <AppBrand
+          className="aw-fade-in gap-2.5"
+          iconClassName="h-8 w-8 rounded-[12px]"
+          titleClassName="text-sm"
+          titleTag="span"
+        />
       )}
     </div>
   );

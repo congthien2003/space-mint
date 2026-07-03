@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import { AppStore } from "./store/AppStore";
@@ -14,6 +15,17 @@ let mainWindow: BrowserWindow | null = null;
 // Created at module load so we can kill all PTYs on before-quit.
 const terminalService = new TerminalService();
 
+function resolveWindowIconPath(): string | undefined {
+  const iconCandidates = [
+    join(process.cwd(), "resources", "icon.png"),
+    join(__dirname, "../../resources/icon.png"),
+    join(process.resourcesPath, "resources", "icon.png"),
+    join(process.resourcesPath, "app.asar.unpacked", "resources", "icon.png")
+  ];
+
+  return iconCandidates.find((candidate) => existsSync(candidate));
+}
+
 function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1400,
@@ -23,6 +35,7 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     title: "Space Mint",
+    icon: resolveWindowIconPath(),
     backgroundColor: "#1b1b1f",
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
