@@ -36,7 +36,7 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
   const [titleDraft, setTitleDraft] = useState(pane.title);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { mountRef } = useTerminal({
+  const { mountRef, fit } = useTerminal({
     terminalId: pane.id,
     fontSize: settings.terminalFontSize,
     theme: settings.terminalTheme,
@@ -59,6 +59,13 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [isFocused, setFocusedPane]);
+
+  useEffect(() => {
+    // Re-fit terminal when focus mode toggles (fixed <-> inline layout change).
+    // Delay one frame so the browser has applied the new CSS before measuring.
+    const id = requestAnimationFrame(() => fit());
+    return () => cancelAnimationFrame(id);
+  }, [isFocused, fit]);
 
   const startEdit = (): void => {
     setTitleDraft(pane.title);
@@ -104,7 +111,7 @@ export function TerminalPane({ pane }: Props): React.JSX.Element {
         className={clsx(
           "flex h-full w-full flex-col overflow-hidden rounded-lg border border-aw-border bg-aw-bg-soft",
           isFocused &&
-            "fixed inset-x-6 bottom-0 top-0 z-50 border-aw-border-strong shadow-2xl shadow-aw-text/20 w-[80%] h-[80%] m-auto"
+            "fixed inset-0 z-50 m-auto h-[85vh] w-[85vw] max-h-[95vh] max-w-[1400px] border-aw-border-strong shadow-2xl shadow-aw-text/20"
         )}
       >
         <div
