@@ -29,7 +29,16 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
   addProject: async (path) => {
     try {
       const project = await window.app.projects.addProject(path);
-      set((state) => ({ projects: [...state.projects, project] }));
+      set((state) => {
+        const exists = state.projects.some((item) => item.id === project.id);
+        return {
+          projects: exists
+            ? state.projects.map((item) =>
+                item.id === project.id ? project : item
+              )
+            : [...state.projects, project]
+        };
+      });
       return project;
     } catch (err) {
       set({ error: String(err) });

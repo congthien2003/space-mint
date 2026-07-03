@@ -14,9 +14,10 @@ export function registerAllIpc(
   settingsService: SettingsService,
   fileTreeService: FileTreeService,
   terminalService: TerminalService,
-  layoutService: LayoutService
+  layoutService: LayoutService,
+  consumePendingOpenPath: () => string | null
 ): void {
-  registerProjectIpc(projectService);
+  registerProjectIpc(projectService, consumePendingOpenPath);
   registerSettingsIpc(settingsService);
   registerFileIpc(fileTreeService, settingsService);
   registerTerminalIpc(terminalService);

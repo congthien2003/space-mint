@@ -7,6 +7,8 @@ const app = {
   projects: {
     selectFolder: (): Promise<string | null> =>
       ipcRenderer.invoke(IPC.PROJECT_SELECT_FOLDER),
+    getPendingOpenPath: (): Promise<string | null> =>
+      ipcRenderer.invoke(IPC.PROJECT_GET_PENDING_OPEN_PATH),
     addProject: (path: string): Promise<Project> =>
       ipcRenderer.invoke(IPC.PROJECT_ADD, path),
     getProjects: (): Promise<Project[]> =>
@@ -14,7 +16,12 @@ const app = {
     getProject: (id: string): Promise<Project | null> =>
       ipcRenderer.invoke(IPC.PROJECT_GET, id),
     removeProject: (id: string): Promise<void> =>
-      ipcRenderer.invoke(IPC.PROJECT_REMOVE, id)
+      ipcRenderer.invoke(IPC.PROJECT_REMOVE, id),
+    onOpenRequested: (callback: (path: string) => void): (() => void) => {
+      const handler = (_event: unknown, path: string): void => callback(path);
+      ipcRenderer.on(IPC.PROJECT_OPEN_REQUESTED, handler);
+      return () => ipcRenderer.removeListener(IPC.PROJECT_OPEN_REQUESTED, handler);
+    }
   },
 
   files: {

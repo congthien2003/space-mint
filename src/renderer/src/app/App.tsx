@@ -17,13 +17,40 @@ export function App(): React.JSX.Element {
   const currentProject = useWorkspaceStore((s) => s.currentProject);
   const addPane = useWorkspaceStore((s) => s.addPane);
   const closeProject = useWorkspaceStore((s) => s.closeProject);
+  const openProject = useWorkspaceStore((s) => s.openProject);
   const loadProjects = useProjectsStore((s) => s.loadProjects);
+  const addProject = useProjectsStore((s) => s.addProject);
   const loadSettings = useSettingsStore((s) => s.loadSettings);
 
   useEffect(() => {
-    void loadProjects();
-    void loadSettings();
-  }, [loadProjects, loadSettings]);
+    let disposed = false;
+
+    const openPath = async (path: string): Promise<void> => {
+      const project = await addProject(path);
+      if (!project || disposed) return;
+      await openProject(project);
+    };
+
+    const removeOpenRequestedListener = window.app.projects.onOpenRequested(
+      (path) => {
+        void openPath(path);
+      }
+    );
+
+    void (async () => {
+      await Promise.all([loadProjects(), loadSettings()]);
+      if (disposed) return;
+      const pendingOpenPath = await window.app.projects.getPendingOpenPath();
+      if (pendingOpenPath && !disposed) {
+        await openPath(pendingOpenPath);
+      }
+    })();
+
+    return () => {
+      disposed = true;
+      removeOpenRequestedListener();
+    };
+  }, [addProject, loadProjects, loadSettings, openProject]);
 
   const handleConfirmBack = async (): Promise<void> => {
     await closeProject();

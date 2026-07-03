@@ -2,7 +2,10 @@ import { ipcMain, dialog } from "electron";
 import { IPC } from "@shared/types";
 import type { ProjectService } from "../services/ProjectService";
 
-export function registerProjectIpc(projectService: ProjectService): void {
+export function registerProjectIpc(
+  projectService: ProjectService,
+  consumePendingOpenPath: () => string | null
+): void {
   ipcMain.handle(IPC.PROJECT_SELECT_FOLDER, async () => {
     const result = await dialog.showOpenDialog({
       properties: ["openDirectory"]
@@ -11,6 +14,10 @@ export function registerProjectIpc(projectService: ProjectService): void {
       return null;
     }
     return result.filePaths[0];
+  });
+
+  ipcMain.handle(IPC.PROJECT_GET_PENDING_OPEN_PATH, () => {
+    return consumePendingOpenPath();
   });
 
   ipcMain.handle(IPC.PROJECT_ADD, (_event, path: string) => {

@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, realpathSync } from "node:fs";
 import { basename } from "node:path";
 import { nanoid } from "nanoid";
 import type { Project } from "@shared/types";
@@ -15,15 +15,24 @@ export class ProjectService {
     if (!existsSync(path)) {
       throw new Error(`Project path does not exist: ${path}`);
     }
+    const normalizedPath = realpathSync.native(path);
+    const normalizedKey = this.getPathKey(normalizedPath);
+    const projects = this.store.get("projects");
+    const existingProject = projects.find(
+      (project) => this.getPathKey(project.path) === normalizedKey
+    );
+    if (existingProject) {
+      return existingProject;
+    }
+
     const now = new Date().toISOString();
     const project: Project = {
       id: nanoid(),
-      name: basename(path),
-      path,
+      name: basename(normalizedPath),
+      path: normalizedPath,
       createdAt: now,
       updatedAt: now
     };
-    const projects = this.store.get("projects");
     this.store.set("projects", [...projects, project]);
     return project;
   }
@@ -40,5 +49,9 @@ export class ProjectService {
     const projects = this.store.get("projects");
     this.store.set("projects", projects.filter((p) => p.id !== id));
     this.layoutService?.remove(id);
+  }
+
+  private getPathKey(path: string): string {
+    return process.platform === "win32" ? path.toLowerCase() : path;
   }
 }

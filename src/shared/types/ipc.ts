@@ -4,6 +4,8 @@ export const IPC = {
   PROJECT_GET: "project:get",
   PROJECT_REMOVE: "project:remove",
   PROJECT_SELECT_FOLDER: "project:select-folder",
+  PROJECT_GET_PENDING_OPEN_PATH: "project:get-pending-open-path",
+  PROJECT_OPEN_REQUESTED: "project:open-requested",
   FILE_READ_DIRECTORY: "file:read-directory",
   FILE_READ_CHILDREN: "file:read-children",
   FILE_READ_TEXT: "file:read-text",
