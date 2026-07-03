@@ -1,846 +1,951 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Space Mint — One workspace for every project</title>
+    <title>Space Mint - Local project workspaces with real terminals</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --color-primary: #e53935;
-        --color-primary-active: #c62828;
-        --color-on-primary: #ffffff;
-        --color-canvas: #f7f7f4;
-        --color-canvas-soft: #fafaf7;
-        --color-surface-card: #ffffff;
-        --color-surface-strong: #e6e5e0;
-        --color-hairline: #e6e5e0;
-        --color-hairline-soft: #efeee8;
-        --color-hairline-strong: #cfcdc4;
-        --color-ink: #26251e;
-        --color-body: #5a5852;
-        --color-muted: #807d72;
-        --color-timeline-thinking: #dfa88f;
-        --color-timeline-grep: #9fc9a2;
-        --color-timeline-read: #9fbbe0;
-        --color-timeline-edit: #c0a8dd;
-        --color-timeline-done: #c08532;
+        --accent: #e53935;
+        --accent-strong: #c62828;
+        --canvas: #f7f7f4;
+        --canvas-soft: #fbfbf8;
+        --surface: #ffffff;
+        --surface-quiet: #efeee8;
+        --line: #e6e5e0;
+        --line-strong: #cfcdc4;
+        --ink: #26251e;
+        --body: #5a5852;
+        --muted: #807d72;
+        --terminal: #16140f;
+        --terminal-text: #eadfc7;
+        --success: #1f8a65;
         --font-sans:
-          "Inter", system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
-        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+          "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
       }
+
       *,
       *::before,
       *::after {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
       }
+
       html {
+        scroll-behavior: smooth;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
+
       body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--body);
         font-family: var(--font-sans);
-        background: var(--color-canvas);
-        color: var(--color-body);
         font-size: 16px;
         line-height: 1.5;
       }
+
+      img,
+      svg {
+        display: block;
+      }
+
       a {
         color: inherit;
         text-decoration: none;
       }
+
       .container {
-        max-width: 1200px;
+        width: min(1180px, calc(100% - 48px));
         margin: 0 auto;
-        padding: 0 24px;
       }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-sans);
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1;
-        border: none;
-        cursor: pointer;
-        transition: background 0.15s ease;
-      }
-      .btn-primary {
-        background: var(--color-primary);
-        color: var(--color-on-primary);
-        padding: 10px 18px;
-        height: 40px;
-        border-radius: 8px;
-      }
-      .btn-primary:hover {
-        background: var(--color-primary-active);
-      }
-      .btn-secondary {
-        background: var(--color-surface-card);
-        color: var(--color-ink);
-        padding: 10px 18px;
-        height: 40px;
-        border-radius: 8px;
-        border: 1px solid var(--color-hairline-strong);
-      }
-      .btn-download {
-        background: var(--color-ink);
-        color: var(--color-canvas);
-        padding: 12px 20px;
-        height: 44px;
-        border-radius: 8px;
-      }
-      .btn-download:hover {
-        background: #1a1915;
-      }
-      .btn-text {
-        background: transparent;
-        color: var(--color-ink);
-        font-weight: 500;
-        padding: 0;
-        height: auto;
-      }
-      .btn-text:hover {
-        color: var(--color-primary);
-      }
-      .top-nav {
-        height: 64px;
-        background: var(--color-canvas);
-        border-bottom: 1px solid var(--color-hairline);
+
+      .topbar {
         position: sticky;
         top: 0;
-        z-index: 50;
+        z-index: 20;
+        border-bottom: 1px solid rgba(230, 229, 224, 0.9);
+        background: rgba(247, 247, 244, 0.86);
+        backdrop-filter: blur(16px);
       }
-      .top-nav .inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-        height: 100%;
+
+      .topbar-inner {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        min-height: 64px;
+        gap: 24px;
       }
-      .brand-lockup {
+
+      .brand {
         display: inline-flex;
         align-items: center;
+        min-width: 0;
         gap: 12px;
-        color: var(--color-ink);
+        color: var(--ink);
       }
-      .brand-icon {
+
+      .brand-mark {
+        display: inline-flex;
         width: 40px;
         height: 40px;
         flex: 0 0 auto;
         overflow: hidden;
+        border: 1px solid var(--line);
         border-radius: 14px;
-        border: 1px solid var(--color-hairline);
         background: #fff;
         box-shadow: 0 10px 24px rgba(38, 37, 30, 0.08);
       }
-      .brand-icon img {
+
+      .brand-mark img {
         width: auto;
         height: 100%;
-        display: block;
       }
-      .brand-text {
+
+      .brand-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 16px;
         font-weight: 600;
-        letter-spacing: -0.02em;
-        color: var(--color-ink);
+        letter-spacing: 0;
       }
-      .brand-lockup-lg {
-        gap: 16px;
-        padding: 8px 18px 8px 8px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.86);
-        border: 1px solid rgba(207, 205, 196, 0.8);
-        box-shadow: 0 18px 44px rgba(38, 37, 30, 0.08);
-        backdrop-filter: blur(10px);
-      }
-      .brand-lockup-lg .brand-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 18px;
-      }
-      .brand-lockup-lg .brand-text {
-        font-size: 18px;
-      }
+
       .nav-links {
         display: flex;
-        gap: 28px;
         align-items: center;
-      }
-      .nav-link {
+        gap: 22px;
+        color: var(--ink);
         font-size: 14px;
         font-weight: 500;
-        color: var(--color-ink);
       }
-      .nav-link:hover {
-        color: var(--color-primary);
+
+      .nav-links a:hover {
+        color: var(--accent);
       }
-      .nav-right {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-      }
-      .hero {
-        padding: 80px 0 64px;
-      }
-      .hero-content {
-        text-align: center;
-        max-width: 760px;
-        margin: 0 auto 48px;
-      }
-      .hero-brand {
-        margin-bottom: 24px;
-      }
-      .eyebrow {
-        display: inline-block;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.88px;
-        text-transform: uppercase;
-        color: var(--color-muted);
-        background: var(--color-surface-strong);
-        padding: 4px 10px;
-        border-radius: 9999px;
-        margin-bottom: 24px;
-      }
-      .hero h1 {
-        font-size: 72px;
-        font-weight: 400;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-        color: var(--color-ink);
-        margin-bottom: 24px;
-      }
-      .hero h1 .accent {
-        color: var(--color-primary);
-      }
-      .hero .subhead {
-        font-size: 18px;
-        color: var(--color-body);
-        max-width: 560px;
-        margin: 0 auto 32px;
-      }
-      .hero-ctas {
-        display: flex;
-        gap: 20px;
+
+      .btn {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
+        min-height: 40px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        transition:
+          background-color 150ms ease,
+          border-color 150ms ease,
+          box-shadow 150ms ease,
+          color 150ms ease,
+          transform 150ms ease;
       }
-      .mockup {
-        background: var(--color-surface-card);
-        border: 1px solid var(--color-hairline);
-        border-radius: 12px;
-        overflow: hidden;
-        max-width: 1000px;
-        margin: 0 auto;
+
+      .btn:hover {
+        transform: translateY(-1px);
       }
-      .mockup-bar {
-        height: 36px;
-        background: var(--color-canvas-soft);
-        border-bottom: 1px solid var(--color-hairline);
-        display: flex;
+
+      .btn-primary {
+        padding: 0 18px;
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 14px 34px rgba(229, 57, 53, 0.18);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-strong);
+      }
+
+      .btn-ghost {
+        padding: 0 16px;
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--ink);
+      }
+
+      .hero {
+        padding: 72px 0 56px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
+        align-items: center;
+        gap: 42px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 0 16px;
-      }
-      .mkdot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
-      .mkdot.r {
-        background: #e85d5d;
-      }
-      .mkdot.y {
-        background: #e8c35d;
-      }
-      .mkdot.g {
-        background: #6dc97f;
-      }
-      .mockup-body {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-      }
-      .mk-sidebar {
-        background: var(--color-canvas-soft);
-        border-right: 1px solid var(--color-hairline);
-        padding: 16px;
+        margin-bottom: 22px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 6px 10px;
+        color: var(--muted);
         font-family: var(--font-mono);
-        font-size: 13px;
-      }
-      .mk-sidebar .sb-title {
         font-size: 11px;
         font-weight: 600;
-        letter-spacing: 0.88px;
+        letter-spacing: 0;
         text-transform: uppercase;
-        color: var(--color-muted);
-        margin-bottom: 12px;
       }
-      .mk-sidebar ul {
-        list-style: none;
+
+      .eyebrow::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 99px;
+        background: var(--success);
+        content: "";
       }
-      .mk-sidebar li {
-        padding: 6px 8px;
-        border-radius: 6px;
-        color: var(--color-body);
-        margin-bottom: 2px;
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
       }
-      .mk-sidebar li.active {
-        background: var(--color-surface-strong);
-        color: var(--color-ink);
+
+      h1 {
+        max-width: 560px;
+        color: var(--ink);
+        font-size: clamp(42px, 6vw, 76px);
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 0.96;
       }
-      .mk-main {
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .hero-copy {
+        max-width: 540px;
+        margin-top: 24px;
+        color: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .hero-actions {
         display: flex;
-        flex-direction: column;
-        min-height: 360px;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
       }
-      .mk-tabs {
-        height: 36px;
-        border-bottom: 1px solid var(--color-hairline);
+
+      .hero-points {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        max-width: 560px;
+        margin-top: 34px;
+      }
+
+      .hero-point {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.66);
+        padding: 12px;
+      }
+
+      .hero-point strong {
+        display: block;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .hero-point span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .capture-frame {
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: 12px;
+        background: var(--surface);
+        box-shadow:
+          0 24px 70px rgba(38, 37, 30, 0.13),
+          0 1px 0 rgba(255, 255, 255, 0.82) inset;
+      }
+
+      .capture-top {
         display: flex;
-        background: var(--color-canvas-soft);
+        align-items: center;
+        justify-content: space-between;
+        min-height: 34px;
+        border-bottom: 1px solid var(--line);
+        background: var(--canvas-soft);
+        padding: 0 12px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 11px;
       }
-      .mk-tab {
-        padding: 0 14px;
+
+      .traffic {
         display: flex;
         align-items: center;
         gap: 6px;
+      }
+
+      .traffic span {
+        width: 9px;
+        height: 9px;
+        border-radius: 99px;
+        background: var(--line-strong);
+      }
+
+      .traffic span:nth-child(1) {
+        background: #ef5a54;
+      }
+
+      .traffic span:nth-child(2) {
+        background: #e8be46;
+      }
+
+      .traffic span:nth-child(3) {
+        background: #55b875;
+      }
+
+      .capture-image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: var(--surface-quiet);
+      }
+
+      .capture-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .hero-shot .capture-image {
+        aspect-ratio: 1386 / 893;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 32px;
+        margin-bottom: 28px;
+      }
+
+      .section-kicker {
+        margin-bottom: 10px;
+        color: var(--accent);
         font-family: var(--font-mono);
-        font-size: 12px;
-        color: var(--color-body);
-        border-right: 1px solid var(--color-hairline);
-      }
-      .mk-tab.active {
-        color: var(--color-ink);
-        background: var(--color-surface-card);
-      }
-      .mk-tab .tdot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--color-timeline-done);
-      }
-      .mk-terms {
-        flex: 1;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-      }
-      .mk-term {
-        background: var(--color-canvas-soft);
-        padding: 16px;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        line-height: 1.7;
-        color: var(--color-body);
-        border-bottom: 1px solid var(--color-hairline);
-      }
-      .mk-term:last-child {
-        border-bottom: none;
-      }
-      .mk-term .prompt {
-        color: var(--color-muted);
-      }
-      .mk-term .cmd {
-        color: var(--color-ink);
-      }
-      .mk-term .ok {
-        color: #1f8a65;
-      }
-      .mk-label {
-        display: inline-block;
         font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.88px;
+        font-weight: 700;
+        letter-spacing: 0;
         text-transform: uppercase;
-        padding: 2px 8px;
-        border-radius: 9999px;
-        margin-bottom: 8px;
-        color: var(--color-ink);
       }
-      .features {
-        padding: 80px 0;
+
+      h2 {
+        max-width: 620px;
+        color: var(--ink);
+        font-size: clamp(30px, 4vw, 46px);
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 1.08;
       }
-      .section-head {
-        text-align: center;
-        max-width: 640px;
-        margin: 0 auto 56px;
-      }
-      .section-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.88px;
-        text-transform: uppercase;
-        color: var(--color-primary);
-        margin-bottom: 16px;
-        display: block;
-      }
-      .section-head h2 {
-        font-size: 36px;
-        font-weight: 400;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        color: var(--color-ink);
-        margin-bottom: 16px;
-      }
-      .section-head p {
+
+      .section-heading p {
+        max-width: 420px;
+        color: var(--body);
         font-size: 16px;
-        color: var(--color-body);
+        line-height: 1.65;
       }
+
       .feature-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 14px;
       }
+
       .feature-card {
-        background: var(--color-surface-card);
-        border: 1px solid var(--color-hairline);
-        border-radius: 12px;
-        padding: 24px;
-      }
-      .feature-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background: var(--color-canvas-soft);
-        border: 1px solid var(--color-hairline);
         display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: var(--color-primary);
+        min-height: 190px;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 14px 30px rgba(38, 37, 30, 0.06);
       }
-      .feature-card h3 {
-        font-size: 18px;
+
+      .feature-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 18px;
+      }
+
+      .feature-number {
+        margin-bottom: 12px;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      h3 {
+        color: var(--ink);
+        font-size: 17px;
         font-weight: 600;
-        color: var(--color-ink);
-        margin-bottom: 8px;
-        line-height: 1.4;
+        letter-spacing: 0;
+        line-height: 1.25;
       }
+
       .feature-card p {
+        margin-top: 9px;
+        color: var(--body);
         font-size: 14px;
-        color: var(--color-body);
-        line-height: 1.5;
+        line-height: 1.55;
       }
-      .cta-band {
-        padding: 96px 0;
-        text-align: center;
-        border-top: 1px solid var(--color-hairline);
-      }
-      .cta-band h2 {
-        font-size: 36px;
-        font-weight: 400;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        color: var(--color-ink);
-        margin-bottom: 16px;
-      }
-      .cta-band p {
-        font-size: 16px;
-        color: var(--color-body);
-        margin-bottom: 32px;
-      }
-      .footer {
-        background: var(--color-canvas);
-        border-top: 1px solid var(--color-hairline);
-        padding: 64px 0 48px;
-      }
-      .footer-grid {
+
+      .showcase {
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-        gap: 32px;
-        margin-bottom: 48px;
+        gap: 42px;
       }
-      .footer-brand .brand-lockup {
+
+      .showcase-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+        grid-template-areas: "media copy";
+        align-items: center;
+        gap: 28px;
+      }
+
+      .showcase-row.is-image-right {
+        grid-template-columns: minmax(260px, 0.5fr) minmax(0, 1.5fr);
+        grid-template-areas: "copy media";
+      }
+
+      .showcase-row .capture-frame {
+        grid-area: media;
+      }
+
+      .showcase-row .capture-image {
+        aspect-ratio: 1920 / 1040;
+      }
+
+      .showcase-copy {
+        grid-area: copy;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 22px;
+      }
+
+      .showcase-copy h3 {
+        font-size: 22px;
+        line-height: 1.16;
+      }
+
+      .showcase-copy p:not(.section-kicker) {
+        margin-top: 12px;
+        color: var(--body);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .showcase-copy .section-kicker {
         margin-bottom: 12px;
       }
-      .footer-brand p {
-        font-size: 14px;
-        color: var(--color-muted);
-        max-width: 280px;
+
+      .workflow {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(90deg, rgba(38, 37, 30, 0.04) 1px, transparent 1px),
+          linear-gradient(rgba(38, 37, 30, 0.04) 1px, transparent 1px),
+          var(--canvas-soft);
+        background-size: 48px 48px;
       }
-      .footer-col h4 {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.88px;
-        text-transform: uppercase;
-        color: var(--color-muted);
-        margin-bottom: 16px;
-      }
-      .footer-col ul {
-        list-style: none;
-      }
-      .footer-col li {
-        margin-bottom: 10px;
-      }
-      .footer-col a {
-        font-size: 14px;
-        color: var(--color-body);
-      }
-      .footer-col a:hover {
-        color: var(--color-ink);
-      }
-      .footer-bottom {
-        border-top: 1px solid var(--color-hairline);
-        padding-top: 24px;
-        display: flex;
-        justify-content: space-between;
+
+      .workflow-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
         align-items: center;
+        gap: 36px;
+      }
+
+      .terminal-card {
+        overflow: hidden;
+        border: 1px solid rgba(230, 229, 224, 0.16);
+        border-radius: 10px;
+        background: var(--terminal);
+        color: var(--terminal-text);
+        box-shadow: 0 24px 70px rgba(38, 37, 30, 0.2);
+      }
+
+      .terminal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 38px;
+        border-bottom: 1px solid rgba(234, 223, 199, 0.12);
+        padding: 0 14px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+      }
+
+      .terminal-body {
+        padding: 18px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .terminal-body .prompt {
+        color: #e8b45a;
+      }
+
+      .terminal-body .cmd {
+        color: #ffffff;
+      }
+
+      .terminal-body .ok {
+        color: #8fde9f;
+      }
+
+      .cta {
+        padding: 78px 0 88px;
+        text-align: center;
+      }
+
+      .cta h2 {
+        margin: 0 auto;
+      }
+
+      .cta p {
+        max-width: 560px;
+        margin: 18px auto 0;
+        color: var(--body);
+        font-size: 17px;
+        line-height: 1.65;
+      }
+
+      .cta-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        color: var(--muted);
         font-size: 14px;
-        color: var(--color-muted);
       }
-      @media (max-width: 1024px) {
-        .hero h1 {
-          font-size: 56px;
-        }
-        .feature-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+
+      .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
       }
-      @media (max-width: 640px) {
-        .hero {
-          padding: 48px 0 32px;
+
+      @media (max-width: 1080px) {
+        .hero-grid,
+        .workflow-grid {
+          grid-template-columns: 1fr;
         }
-        .hero h1 {
-          font-size: 32px;
-          letter-spacing: -0.02em;
-        }
-        .hero .subhead {
-          font-size: 16px;
-        }
-        .hero-ctas {
-          flex-direction: column;
+
+        .showcase-row,
+        .showcase-row.is-image-right {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "copy"
+            "media";
           gap: 16px;
         }
-        .brand-lockup-lg {
-          gap: 12px;
-          padding-right: 16px;
+
+        .feature-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
-        .brand-lockup-lg .brand-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 15px;
+
+        .feature-card {
+          min-height: 210px;
         }
-        .brand-lockup-lg .brand-text {
-          font-size: 16px;
+      }
+
+      @media (max-width: 760px) {
+        .container {
+          width: min(100% - 28px, 1180px);
         }
+
+        .topbar-inner {
+          min-height: 58px;
+        }
+
         .nav-links {
           display: none;
         }
-        .features {
-          padding: 56px 0;
+
+        .hero {
+          padding: 46px 0 36px;
         }
-        .section-head h2,
-        .cta-band h2 {
-          font-size: 28px;
+
+        .section,
+        .cta {
+          padding: 54px 0;
         }
+
+        .hero-points,
         .feature-grid {
           grid-template-columns: 1fr;
         }
-        .mockup-body {
-          grid-template-columns: 1fr;
+
+        .section-heading {
+          display: block;
         }
-        .mk-sidebar {
-          display: none;
+
+        .section-heading p {
+          margin-top: 14px;
         }
-        .cta-band {
-          padding: 64px 0;
+
+        .showcase {
+          gap: 34px;
         }
-        .footer-grid {
-          grid-template-columns: 1fr 1fr;
+
+        .showcase-copy {
+          padding: 18px;
         }
-        .footer-bottom {
+
+        .footer-inner {
           flex-direction: column;
-          gap: 12px;
-          text-align: center;
+          align-items: flex-start;
         }
       }
     </style>
   </head>
   <body>
-    <nav class="top-nav">
-      <div class="inner">
-        <a href="#" class="brand-lockup" aria-label="Space Mint home">
-          <span class="brand-icon"
-            ><img src="./resources/icon.png" alt=""
-          /></span>
-          <span class="brand-text">Space Mint</span>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a href="#" class="brand" aria-label="Space Mint home">
+          <span class="brand-mark">
+            <img src="./resources/icon.png" alt="" />
+          </span>
+          <span class="brand-name">Space Mint</span>
         </a>
-        <div class="nav-links">
-          <a href="#features" class="nav-link">Features</a>
-          <a href="#" class="nav-link">Docs</a>
-          <a href="#" class="nav-link">Pricing</a>
-          <a href="#" class="nav-link">GitHub</a>
-        </div>
-        <div class="nav-right">
-          <a href="#" class="btn btn-text">Sign in</a>
-          <a href="#" class="btn btn-primary">Download</a>
-        </div>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#features">Features</a>
+          <a href="#showcase">Screenshots</a>
+          <a href="#workflow">Workflow</a>
+        </nav>
+        <a class="btn btn-primary" href="#download">Download</a>
       </div>
-    </nav>
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-brand">
-            <span class="brand-lockup brand-lockup-lg">
-              <span class="brand-icon"
-                ><img src="./resources/icon.png" alt=""
-              /></span>
-              <span class="brand-text">Space Mint</span>
-            </span>
-          </div>
-          <span class="eyebrow">Open source &middot; MIT</span>
-          <h1>
-            One workspace.<br /><span class="accent">Every project.</span>
-          </h1>
-          <p class="subhead">
-            Space Mint brings your projects, terminals, and agents into a single
-            organized environment. Add projects, split terminals, and keep
-            everything in reach.
-          </p>
-          <div class="hero-ctas">
-            <a href="#" class="btn btn-download">&darr; Download for macOS</a>
-            <a href="#" class="btn btn-text">View on GitHub &rarr;</a>
-          </div>
-        </div>
-        <div class="mockup">
-          <div class="mockup-bar">
-            <span class="mkdot r"></span><span class="mkdot y"></span
-            ><span class="mkdot g"></span>
-          </div>
-          <div class="mockup-body">
-            <aside class="mk-sidebar">
-              <div class="sb-title">Projects</div>
-              <ul>
-                <li class="active">&#9656; space-mint</li>
-                <li>&#9656; api-server</li>
-                <li>&#9656; web-client</li>
-                <li>&#9656; mobile-app</li>
-              </ul>
-            </aside>
-            <div class="mk-main">
-              <div class="mk-tabs">
-                <div class="mk-tab active">
-                  <span class="tdot"></span>terminal &mdash; api-server
-                </div>
-                <div class="mk-tab">
-                  <span class="tdot"></span>terminal &mdash; web-client
-                </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Local workspace for agent-heavy projects</span>
+            <h1>
+              Open a project. Split terminals.
+              <span class="accent">Stay in flow.</span>
+            </h1>
+            <p class="hero-copy">
+              Space Mint turns a local folder into a focused workspace with a
+              project list, file worktree, real terminal panes, focus mode, and
+              a preview sidebar for quick file inspection.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#features">Explore features</a>
+              <a class="btn btn-ghost" href="#showcase">View captures</a>
+            </div>
+            <div class="hero-points" aria-label="Key workspace facts">
+              <div class="hero-point">
+                <strong>01</strong>
+                <span>Recent projects stay ready</span>
               </div>
-              <div class="mk-terms">
-                <div class="mk-term">
-                  <span
-                    class="mk-label"
-                    style="background: var(--color-timeline-read)"
-                    >Terminal 1</span
-                  >
-                  <div>
-                    <span class="prompt">~/projects/api-server $</span>
-                    <span class="cmd">npm run dev</span>
-                  </div>
-                  <div>Server ready on :3000</div>
-                  <div class="ok">&#10003; Connected to database</div>
-                </div>
-                <div class="mk-term">
-                  <span
-                    class="mk-label"
-                    style="background: var(--color-timeline-grep)"
-                    >Terminal 2</span
-                  >
-                  <div>
-                    <span class="prompt">~/projects/web-client $</span>
-                    <span class="cmd">npm run build</span>
-                  </div>
-                  <div>Bundling&hellip; 142 modules</div>
-                  <div class="ok">&#10003; Build complete in 3.2s</div>
-                </div>
+              <div class="hero-point">
+                <strong>04</strong>
+                <span>Terminal panes in one frame</span>
+              </div>
+              <div class="hero-point">
+                <strong>2x</strong>
+                <span>Sidebars for files and preview</span>
               </div>
             </div>
           </div>
+
+          <div class="capture-frame hero-shot" aria-label="Project list capture">
+            <div class="capture-top">
+              <span>Project List</span>
+              <div class="traffic" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="capture-image">
+              <img
+                src="https://icniaopivypurbfsoncy.supabase.co/storage/v1/object/public/space-mint/project-list.png"
+                alt="Space Mint project list screen with an Add Project button and recent project."
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-label">Features</span>
-          <h2>Built for developers who juggle projects</h2>
-          <p>
-            Everything you need to organize, run, and switch between work
-            &mdash; without the clutter.
-          </p>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Main features</p>
+              <h2>Built around the screens you use every day.</h2>
+            </div>
+            <p>
+              A compact set of workspace controls keeps project navigation,
+              terminals, focus mode, and preview close together.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-body">
+                <span class="feature-number">01</span>
+                <h3>Project List</h3>
+                <p>
+                  Keep local repositories in a clean recent list and reopen the
+                  right workspace quickly.
+                </p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-body">
+                <span class="feature-number">02</span>
+                <h3>Multiple Terminal</h3>
+                <p>
+                  Arrange several live terminal sessions in a saved project
+                  layout without leaving the app.
+                </p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-body">
+                <span class="feature-number">03</span>
+                <h3>Focus Terminal</h3>
+                <p>
+                  Pull one terminal forward when a command or agent session
+                  needs full attention.
+                </p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-body">
+                <span class="feature-number">04</span>
+                <h3>File Worktrees</h3>
+                <p>
+                  Browse project folders, open terminal sessions from context,
+                  and keep code structure visible.
+                </p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-body">
+                <span class="feature-number">05</span>
+                <h3>Preview file sidebar</h3>
+                <p>
+                  Select a file from the tree and inspect its contents in the
+                  right sidebar while terminals keep running.
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"
+      </section>
+
+      <section class="section workflow" id="showcase">
+        <div class="container showcase">
+          <article class="showcase-row">
+            <div class="showcase-copy">
+              <p class="section-kicker">Multiple Terminal + Preview file sidebar</p>
+              <h3>Keep terminals and file context on the same screen</h3>
+              <p>
+                Run several terminal sessions while the file tree and preview
+                sidebar stay close by. It keeps navigation, inspection, and
+                command output in one working surface.
+              </p>
+            </div>
+            <div class="capture-frame">
+              <div class="capture-top">
+                <span>Multiple Terminal + Preview file sidebar</span>
+                <div class="traffic" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="capture-image">
+                <img
+                  src="https://icniaopivypurbfsoncy.supabase.co/storage/v1/object/public/space-mint/multiple-terminal-3.png"
+                  alt="Space Mint workspace with four terminal panes, file tree, and file preview sidebar."
                 />
-                <path d="M12 11v4M10 13h4" />
-              </svg>
+              </div>
             </div>
-            <h3>Add Project</h3>
-            <p>
-              Drop in any local repo or folder. Projects are indexed and ready
-              to run in seconds.
+          </article>
+
+          <article class="showcase-row is-image-right">
+            <div class="showcase-copy">
+              <p class="section-kicker">Focus Terminal</p>
+              <h3>Zoom into the session that needs attention</h3>
+              <p>
+                Focus mode brings one terminal forward when logs, prompts, or
+                long-running commands need space. The wider workspace remains
+                within reach when you return.
+              </p>
+            </div>
+            <div class="capture-frame">
+              <div class="capture-top">
+                <span>Focus Terminal</span>
+                <div class="traffic" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="capture-image">
+                <img
+                  src="https://icniaopivypurbfsoncy.supabase.co/storage/v1/object/public/space-mint/focus-terminal.png"
+                  alt="Focused terminal overlay on top of the workspace."
+                />
+              </div>
+            </div>
+          </article>
+
+          <article class="showcase-row">
+            <div class="showcase-copy">
+              <p class="section-kicker">File Worktrees</p>
+              <h3>Move through the project without losing terminal state</h3>
+              <p>
+                The file worktree keeps folder structure visible beside active
+                panes. Open terminals from context and keep the project shape
+                readable while you work.
+              </p>
+            </div>
+            <div class="capture-frame">
+              <div class="capture-top">
+                <span>File Worktrees</span>
+                <div class="traffic" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="capture-image">
+                <img
+                  src="https://icniaopivypurbfsoncy.supabase.co/storage/v1/object/public/space-mint/multiple-terminal-2.png"
+                  alt="Workspace showing file tree and multiple terminal panes."
+                />
+              </div>
+            </div>
+          </article>
+
+          <article class="showcase-row is-image-right">
+            <div class="showcase-copy">
+              <p class="section-kicker">Multiple Terminal workspace</p>
+              <h3>Split local work into clear parallel lanes</h3>
+              <p>
+                Keep servers, scripts, agents, and diagnostics separated in one
+                bounded workspace. Each pane stays visible, so switching tasks
+                does not mean rebuilding context.
+              </p>
+            </div>
+            <div class="capture-frame">
+              <div class="capture-top">
+                <span>Multiple Terminal workspace</span>
+                <div class="traffic" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="capture-image">
+                <img
+                  src="https://icniaopivypurbfsoncy.supabase.co/storage/v1/object/public/space-mint/multiple-terminal.png"
+                  alt="Space Mint workspace with multiple terminal panes arranged in one frame."
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="workflow">
+        <div class="container workflow-grid">
+          <div>
+            <p class="section-kicker">Daily workflow</p>
+            <h2>Designed for repeated local development loops.</h2>
+            <p class="hero-copy">
+              Add a project, open panes from the project root or file tree,
+              focus the session that matters, then preview files without
+              switching away from your terminal layout.
             </p>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 2 2 7l10 5 10-5-10-5z" />
-                <path d="M2 12l10 5 10-5" />
-                <path d="M2 17l10 5 10-5" />
-              </svg>
+          <div class="terminal-card" aria-label="Terminal workflow sample">
+            <div class="terminal-head">
+              <span>agent-workspace</span>
+              <span>local</span>
             </div>
-            <h3>Workspaces</h3>
-            <p>
-              Group related projects into a workspace. Switch context instantly
-              without losing your setup.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="2" y="4" width="9" height="8" rx="1" />
-                <rect x="13" y="4" width="9" height="8" rx="1" />
-                <rect x="2" y="14" width="9" height="6" rx="1" />
-                <path d="M5 8l2 1.5L5 11M16 17h4" />
-              </svg>
+            <div class="terminal-body">
+              <div>
+                <span class="prompt">Z:\CongThien\Temp\agent-workspace&gt;</span>
+                <span class="cmd"> open Space Mint</span>
+              </div>
+              <div class="ok">Project list loaded</div>
+              <div>
+                <span class="prompt">workspace&gt;</span>
+                <span class="cmd"> split terminal --grid</span>
+              </div>
+              <div class="ok">File tree, terminals, and preview are ready</div>
             </div>
-            <h3>Multiple Terminals</h3>
-            <p>
-              Run as many terminals as you need &mdash; each tied to its own
-              project, all in one window.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="4" width="18" height="16" rx="1" />
-                <path d="M3 12h18" />
-                <path d="M7 8l2 1.5L7 11M7 16h4" />
-              </svg>
-            </div>
-            <h3>Split Terminal</h3>
-            <p>
-              Divide a pane into splits to watch logs and run commands side by
-              side, in real time.
-            </p>
           </div>
         </div>
-      </div>
-    </section>
-    <section class="cta-band">
-      <div class="container">
-        <h2>Start organizing your projects today</h2>
-        <p>Free and open source. Available for macOS, Windows, and Linux.</p>
-        <a href="#" class="btn btn-primary">Download Space Mint</a>
-      </div>
-    </section>
+      </section>
+
+      <section class="cta" id="download">
+        <div class="container">
+          <h2>Bring your local projects into one focused workspace.</h2>
+          <p>
+            Space Mint keeps project navigation, terminal panes, focus mode, and
+            file preview close together for everyday engineering work.
+          </p>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="#">Download Space Mint</a>
+            <a class="btn btn-ghost" href="#showcase">Review screenshots</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <a href="#" class="brand-lockup" aria-label="Space Mint home">
-              <span class="brand-icon"
-                ><img src="./resources/icon.png" alt=""
-              /></span>
-              <span class="brand-text">Space Mint</span>
-            </a>
-            <p>
-              An open-source workspace for developers who want every project in
-              one place.
-            </p>
-          </div>
-          <div class="footer-col">
-            <h4>Product</h4>
-            <ul>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Download</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Changelog</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Docs</h4>
-            <ul>
-              <li><a href="#">Getting started</a></li>
-              <li><a href="#">Workspaces</a></li>
-              <li><a href="#">Terminals</a></li>
-              <li><a href="#">Shortcuts</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Community</h4>
-            <ul>
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Discord</a></li>
-              <li><a href="#">Forum</a></li>
-              <li><a href="#">Blog</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">License</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <span>&copy; 2026 Space Mint. MIT License.</span>
-          <span>Made for developers</span>
-        </div>
+      <div class="container footer-inner">
+        <a href="#" class="brand" aria-label="Space Mint home">
+          <span class="brand-mark">
+            <img src="./resources/icon.png" alt="" />
+          </span>
+          <span class="brand-name">Space Mint</span>
+        </a>
+        <span>Local project workspaces with real terminal sessions.</span>
       </div>
     </footer>
   </body>
